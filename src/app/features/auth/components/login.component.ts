@@ -7,21 +7,21 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
       <div id="container">
           <form [formGroup]="formLogin">
               <div class="mb-3 row align-items-center">
-                  <label for="email" class="col-12 col-sm-2 col-form-label">Email</label>
-                  <div class="col-12 col-sm-10">
+                  <label for="email" class="col-12 col-sm-3 col-form-label">Email</label>
+                  <div class="col-12 col-sm-9">
                       <input type="email" class="form-control" id="email" formControlName="email">
                   </div>
               </div>
               <div class="mb-3 row align-items-center">
-                  <label for="password" class="col-12 col-sm-2 col-form-label pb-sm-4">Password</label>
-                  <div class="col-12 col-sm-10">
+                  <label for="password" class="col-12 col-sm-3 col-form-label pb-sm-4">Password</label>
+                  <div class="col-12 col-sm-9">
                       <input type="password" class="form-control" id="password" formControlName="password">
                       <a routerLink="/forgot-password"><small class="form-text text-muted">Password dimenticata?</small></a>
                   </div>
               </div>
           </form>
 
-          <p>Nuovo utente? Registrati <a routerLink="/signup">qui</a></p>
+          <a routerLink="/signup" class="text-primary text-decoration-underline">Nuovo utente? Registrati qui</a>
 
           <div class="w-100 d-flex justify-content-center mt-5">
               <button class="btn btn-primary w-75" (click)="login()" [disabled]="formLogin.invalid">Login</button>
@@ -36,6 +36,10 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
           a {
             text-decoration-color: #6c757d;
           }
+        }
+        
+        a {
+          cursor: pointer;
         }
       }
     `]
