@@ -23,7 +23,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 
           <p>Nuovo utente? Registrati <a routerLink="/signup">qui</a></p>
 
-          <div class="w-100 d-flex justify-content-center">
+          <div class="w-100 d-flex justify-content-center mt-5">
               <button class="btn btn-primary w-75" (click)="login()" [disabled]="formLogin.invalid">Login</button>
           </div>
       </div>
