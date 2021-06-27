@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthContainerComponent } from './components/auth-container.component';
-import { SigninComponent } from './components/signin.component';
+import { SignupComponent } from './components/signup.component';
 import { LoginComponent } from './components/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password.component';
 
@@ -11,7 +11,7 @@ import { ForgotPasswordComponent } from './components/forgot-password.component'
 @NgModule({
   declarations: [
     AuthContainerComponent,
-    SigninComponent,
+    SignupComponent,
     LoginComponent,
     ForgotPasswordComponent
   ],

@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
     <p>
       auth-container works!
     </p>
+    
+    <router-outlet></router-outlet>
   `,
   styles: [
   ]

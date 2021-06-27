@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class SigninComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
   constructor() { }
 
