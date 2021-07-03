@@ -60,8 +60,7 @@ export class LoginComponent {
   }
 
   public login(): void {
-    console.log('ls');
-      this.loading = true;
+    this.loading = true;
     this.authService.login(this.formLogin.value.email, this.formLogin.value.password)
       .subscribe(
         () => this.loading = false,
