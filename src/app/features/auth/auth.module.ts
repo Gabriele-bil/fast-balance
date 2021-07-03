@@ -7,6 +7,7 @@ import { SignupComponent } from './components/signup.component';
 import { LoginComponent } from './components/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { SharedModule } from "../../shared/modules/shared.module";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ReactiveFormsModule } from "@angular/forms";
   imports: [
     CommonModule,
     AuthRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AuthModule { }

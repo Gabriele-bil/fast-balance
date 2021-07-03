@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { AuthService } from "../../../shared/services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,10 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
           <a routerLink="/signup" class="text-primary text-decoration-underline">Nuovo utente? Registrati qui</a>
 
           <div class="w-100 d-flex justify-content-center mt-5">
-              <button class="btn btn-primary w-75" (click)="login()" [disabled]="formLogin.invalid">Login</button>
+              <app-loading-button [disabled]="formLogin.invalid"
+                                  [classes]="['btn', 'btn-primary', 'w-100', 'px-5', 'py-2']" text="Login"
+                                  (clicked)="login()" [loading]="loading">
+              </app-loading-button>
           </div>
       </div>
   `,
@@ -37,7 +41,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
             text-decoration-color: #6c757d;
           }
         }
-        
+
         a {
           cursor: pointer;
         }
@@ -50,6 +54,18 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
+  public loading = false;
+
+  constructor(private readonly authService: AuthService) {
+  }
+
   public login(): void {
+    console.log('ls');
+      this.loading = true;
+    this.authService.login(this.formLogin.value.email, this.formLogin.value.password)
+      .subscribe(
+        () => this.loading = false,
+        () => this.loading = false
+      );
   }
 }
