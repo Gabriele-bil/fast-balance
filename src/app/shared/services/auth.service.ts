@@ -30,11 +30,15 @@ export class AuthService {
     );
   }
 
-  public login(email: string, password: string): Observable<any> {
+  public login(email: string, password: string): Observable<UserCredential | undefined> {
     return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(
       switchMap(userRes => this.userService.getUserByEmail(userRes.user?.email)),
       tap(this.updateCurrentUser)
     );
+  }
+
+  public forgotPassword(passwordResetEmail: string): Observable<void> {
+    return from(this.auth.sendPasswordResetEmail(passwordResetEmail))
   }
 
   private updateCurrentUser = (user: UserCredential | undefined) => this.currentUser$.next(user);
