@@ -6,14 +6,13 @@ import { SignupComponent } from "./components/signup.component";
 import { ForgotPasswordComponent } from "./components/forgot-password.component";
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login' },
   {
     path: '', component: AuthContainerComponent,
     children: [
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
-      { path: '**', redirectTo: 'login' },
     ]
   }
 ];
