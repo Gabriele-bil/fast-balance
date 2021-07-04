@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-container',
@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
     </div>
   `,
   styles: [
-    //lang scss
+    //language=scss
     `
       #container {
         width: 100vw;
@@ -20,12 +20,5 @@ import { Component, OnInit } from '@angular/core';
       }
     `]
 })
-export class DashboardContainerComponent implements OnInit {
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
+export class DashboardContainerComponent {
 }

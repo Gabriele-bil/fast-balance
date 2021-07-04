@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-sidebar',
   template: `
     <div id="container">
-      
+
     </div>
   `,
   styles: [
@@ -17,11 +17,5 @@ import { Component, OnInit } from '@angular/core';
       }
     `]
 })
-export class DashboardSidebarComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class DashboardSidebarComponent {
 }
