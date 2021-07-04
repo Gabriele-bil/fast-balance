@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashobardContainerComponent } from './components/dashobard-container.component';
-import { DashobardSidebarComponent } from './components/dashobard-sidebar.component';
-import { DashobardTopbarComponent } from './components/dashobard-topbar.component';
+import { DashboardContainerComponent } from './components/dashboard-container.component';
+import { DashboardSidebarComponent } from './components/dashboard-sidebar.component';
+import { DashboardTopBarComponent } from './components/dashboard-top-bar.component';
+import { SharedModule } from "../../shared/modules/shared.module";
 
 
 @NgModule({
   declarations: [
-    DashobardContainerComponent,
-    DashobardSidebarComponent,
-    DashobardTopbarComponent
+    DashboardContainerComponent,
+    DashboardSidebarComponent,
+    DashboardTopBarComponent
   ],
   imports: [
-    CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    SharedModule
   ]
 })
-export class DashboardModule { }
+export class DashboardModule {
+}
