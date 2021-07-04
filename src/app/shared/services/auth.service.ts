@@ -41,5 +41,8 @@ export class AuthService {
     return from(this.auth.sendPasswordResetEmail(passwordResetEmail))
   }
 
-  private updateCurrentUser = (user: UserCredential | undefined) => this.currentUser$.next(user);
+  private updateCurrentUser = (user: UserCredential | undefined) => {
+    this.currentUser$.next(user);
+    this.router.navigateByUrl('/dashboard');
+  };
 }
