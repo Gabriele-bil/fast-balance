@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from "@shared/services/user.service";
-import { User } from "@shared/models/user.model";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-container',
@@ -22,32 +20,5 @@ import { User } from "@shared/models/user.model";
       }
     `]
 })
-export class DashboardContainerComponent implements OnInit {
-
-
-  constructor(private readonly userService: UserService) {
-  }
-
-  ngOnInit(): void {
-    const newUser = {
-      age: 40,
-      username: 'furu',
-      accounts: [],
-      name: 'gabriele',
-      location: {
-        city: 'Palermo',
-        cap: '90100',
-        address: 'Via roma 100'
-      },
-      pictureUrl: '',
-      publicProfile: true,
-      surname: 'bilello',
-      job: '',
-      status: 'active'
-    } as unknown as User;
-
-    this.userService.update('AERY1pFkAWXQzYz2vpCO', newUser).subscribe((x) => console.log(x))
-  }
-
-
+export class DashboardContainerComponent {
 }

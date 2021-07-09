@@ -29,10 +29,14 @@ export abstract class GenericService<T> {
     );
   }
 
-  update(id: string, item: T): Observable<any> {
+  update(id: string, item: T): Observable<T | undefined> {
     return from(this.getFirestoreCollection().doc(id).set(item, { merge: true })).pipe(
       switchMap(() => this.getById(id))
     )
+  }
+
+  delete(id: string): Observable<void> {
+    return from(this.getFirestoreCollection().doc(id).delete());
   }
 
   protected abstract getCollectionName(): string;

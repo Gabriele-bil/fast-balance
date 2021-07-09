@@ -15,7 +15,8 @@ export class UserService extends GenericService<User>{
   }
 
   createUser(username: string, email: string): Observable<UserCredential | undefined> {
-    return from(this.firestore.collection(this.getCollectionName()).add({ username, email })).pipe(
+    const createdDate = new Date().toISOString();
+    return from(this.firestore.collection(this.getCollectionName()).add({ username, email, createdDate })).pipe(
       switchMap(docRef => this.firestore.collection(this.getCollectionName()).doc<UserCredential>(docRef.id).valueChanges())
     );
   }
