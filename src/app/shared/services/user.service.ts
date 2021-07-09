@@ -8,7 +8,7 @@ import { GenericService } from "@shared/services/generic.service";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends GenericService<User>{
+export class UserService extends GenericService<User> {
 
   constructor(@Inject(AngularFirestore) firestore: AngularFirestore) {
     super(firestore);
