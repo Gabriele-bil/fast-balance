@@ -25,7 +25,7 @@ export class Account implements IAccount {
   }
 
   public static Build(account: IAccount): Account {
-    const cards = account.cards.map(card => Card.Build(card));
+    const cards = account.cards?.map(card => Card.Build(card));
 
     return new this(
       account.id,

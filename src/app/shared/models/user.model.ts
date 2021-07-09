@@ -43,7 +43,7 @@ export class User implements IUser {
 
   public static Build(user: IUser): User {
 
-    const accounts = user.accounts.map(account => Account.Build(account));
+    const accounts = user.accounts?.map(account => Account.Build(account));
 
     return new this(
       user.id,

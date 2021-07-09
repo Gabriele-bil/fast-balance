@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-auth-container',
   template: `
       <div class="wrapper d-flex align-items-center justify-content-center">
-          <div class="card p-3 d-flex flex-column justify-content-center">
+          <div class="card p-4 d-flex flex-column justify-content-center">
               <h1 class="text-center mb-4">Fast Balance</h1>
               <router-outlet></router-outlet>
           </div>

@@ -25,7 +25,7 @@ export class Card {
   }
 
   public static Build(card: ICard): Card {
-    const payments = card.payments.map(payment => Payment.Build(payment));
+    const payments = card.payments?.map(payment => Payment.Build(payment));
 
     return new this(
       card.id,
