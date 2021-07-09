@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
       <app-dashboard-top-bar></app-dashboard-top-bar>
       <div class="d-flex">
         <app-dashboard-sidebar></app-dashboard-sidebar>
+        <router-outlet></router-outlet>
       </div>
     </div>
   `,
