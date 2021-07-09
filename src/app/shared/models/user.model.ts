@@ -4,29 +4,30 @@ import { Account, IAccount } from "@shared/models/account.model";
 export type UserCredential = { email: string, username: string };
 
 export interface IUser {
-  id: string;
+  id?: string;
   name: string;
   surname: string;
   username: string;
   email: string;
   age: number;
-  work: string;
+  job: string;
   pictureUrl: string;
   location: ILocation;
   publicProfile: boolean;
   accounts: IAccount[];
   createdDate: string;
+  status: 'active' | 'banned'
 }
 
 export class User implements IUser {
   private constructor(
-    public id = '',
+    public id?: string,
     public name = '',
     public surname = '',
     public username = '',
     public email = '',
     public age = 0,
-    public work = '',
+    public job = '',
     public pictureUrl = '',
     public location: ILocation = {
       city: '',
@@ -35,7 +36,8 @@ export class User implements IUser {
     },
     public publicProfile = false,
     public accounts: Account[] = [],
-    public createdDate = ''
+    public createdDate = '',
+    public status: 'active' | 'banned' = 'active'
   ) {
   }
 
@@ -50,12 +52,13 @@ export class User implements IUser {
       user.username,
       user.email,
       user.age,
-      user.work,
+      user.job,
       user.pictureUrl,
       user.location,
       user.publicProfile,
       accounts,
-      user.createdDate
+      user.createdDate,
+      user.status
     )
   }
 }

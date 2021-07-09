@@ -1,7 +1,7 @@
 import { Card, ICard } from "@shared/models/card.model";
 
 export interface IAccount {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   cards: ICard[];
@@ -13,7 +13,7 @@ export interface IAccount {
 
 export class Account implements IAccount {
   private constructor(
-    public id = '',
+    public id?: string,
     public name = '',
     public description = '',
     public cards: Card[] = [],

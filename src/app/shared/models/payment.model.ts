@@ -1,5 +1,5 @@
 export interface IPayment {
-  id: string;
+  id?: string;
   quantity: number;
   currency: 'eur' | 'usd'
   date: string;
@@ -8,7 +8,7 @@ export interface IPayment {
 
 export class Payment implements IPayment {
   private constructor(
-    public id = '',
+    public id?: string,
     public quantity = 0,
     public currency: 'eur' | 'usd' = 'eur',
     public date = '',

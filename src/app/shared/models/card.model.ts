@@ -1,7 +1,7 @@
 import { IPayment, Payment } from "@shared/models/payment.model";
 
 export interface ICard {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   backgroundUrl: string;
@@ -13,7 +13,7 @@ export interface ICard {
 
 export class Card {
   private constructor(
-    public id = '',
+    public id?: string,
     public name = '',
     public description = '',
     public backgroundUrl = '',
