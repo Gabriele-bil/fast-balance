@@ -38,7 +38,10 @@ export class AuthService {
 
   public update(id: string, item: User): Observable<User | undefined> {
     return this.userService.update(id, item).pipe(
-      tap(user => this.currentUser$!.next(user as User))
+      tap(user => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.currentUser$!.next(user as User);
+      })
     )
   }
 

@@ -14,11 +14,13 @@ import { switchMap } from "rxjs/operators";
     <div id="container" class="d-flex justify-content-center p-5">
       <div class="background-white w-100 p-3">
         <h1>Impostazioni Account</h1>
+        
         <div class="d-flex flex-row-reverse w-100">
           <button class="btn btn-primary" (click)="toggleForm()">
             {{ edit ? 'Viusalizza' : 'Modifica' }}
           </button>
         </div>
+
         <div class="row mt-3">
           <form class="col-8" [formGroup]="settingsUserForm">
             <div class="row">
@@ -69,6 +71,10 @@ import { switchMap } from "rxjs/operators";
               </div>
               <div class="col">
                 <input type="text" class="form-control" placeholder="Telefono" formControlName="phoneNumber"/>
+              </div>
+
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Sito Web" formControlName="website"/>
               </div>
             </div>
 
@@ -172,6 +178,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
       gender: formValue.gender,
       age: formValue.age,
       phoneNumber: formValue.phoneNumber,
+      website: formValue.website,
       location: {
         city: formValue.city,
         address: formValue.address,
@@ -205,6 +212,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
       gender: [{ value: user.gender, disabled: !this.edit }],
       age: [{ value: user.age, disabled: !this.edit }],
       phoneNumber: [{ value: user.phoneNumber, disabled: !this.edit }],
+      website: [{ value: user.website, disabled: !this.edit }],
       city: [{ value: user.location.city, disabled: !this.edit }],
       address: [{ value: user.location.address, disabled: !this.edit }],
       cap: [{ value: user.location.cap, disabled: !this.edit }],
