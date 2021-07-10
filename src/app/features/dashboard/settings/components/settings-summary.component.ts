@@ -16,6 +16,7 @@ import { Component, Input, OnInit } from '@angular/core';
         <h3>Carte registrate: 5</h3>
         <h3>Movimenti effettuati: 13042,04 €</h3>
         <h3>Data di creazione dell'account: 09/07/2021</h3>
+        <h3>Ultimo accesso: 09/07/2021</h3>
         <button class="btn btn-secondary align-self-center mt-3">Aggiungi nuovo conto</button>
       </div>
     </div>

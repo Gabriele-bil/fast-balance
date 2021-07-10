@@ -12,15 +12,19 @@ import { IUser, User } from "../models/user.model";
 })
 export class AuthService {
 
-  private currentUser$ = new BehaviorSubject<User | undefined>(undefined);
-
+  private currentUser$: BehaviorSubject<User> | undefined = new BehaviorSubject<User>(User.Build({} as User));
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
     private userService: UserService
   ) {
-    this.currentUser$.subscribe(user => user ? localStorage.setItem('user', JSON.stringify(user)) : null);
+      this.currentUser$?.next(JSON.parse(<string>localStorage.getItem('user')));
+      this.currentUser$!.subscribe(user => user ? localStorage.setItem('user', JSON.stringify(user)) : null);
+  }
+
+  public get me(): Observable<User> {
+    return this.currentUser$!.asObservable() as Observable<User>;
   }
 
   public signup(username: string, email: string, password: string): Observable<User | undefined> {
@@ -46,7 +50,7 @@ export class AuthService {
     this.auth.authState.subscribe(state => {
       user!.createdDate = state!.metadata.creationTime as string;
       user!.lastAccess = state!.metadata.lastSignInTime as string;
-      this.currentUser$.next(user);
+      this.currentUser$!.next(user as User);
       this.router.navigateByUrl('/dashboard');
     })
   };
