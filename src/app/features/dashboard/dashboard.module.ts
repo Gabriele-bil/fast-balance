@@ -3,20 +3,10 @@ import { NgModule } from '@angular/core';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardContainerComponent } from './components/dashboard-container.component';
 import { DashboardSidebarComponent } from './components/dashboard-sidebar.component';
-import { DashboardTopBarComponent } from './components/dashboard-top-bar.component';
-import { SharedModule } from "../../shared/modules/shared.module";
-
+import { SharedModule } from '../../shared/modules/shared.module';
 
 @NgModule({
-  declarations: [
-    DashboardContainerComponent,
-    DashboardSidebarComponent,
-    DashboardTopBarComponent
-  ],
-  imports: [
-    DashboardRoutingModule,
-    SharedModule
-  ]
+  declarations: [DashboardContainerComponent, DashboardSidebarComponent],
+  imports: [DashboardRoutingModule, SharedModule],
 })
-export class DashboardModule {
-}
+export class DashboardModule {}
