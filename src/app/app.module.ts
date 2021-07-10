@@ -9,10 +9,11 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '@environments//environment.prod';
 import { AngularFireStorageModule } from "@angular/fire/storage";
+import { SpinnerComponent } from "@shared/components/spinner.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, SpinnerComponent
   ],
   imports: [
     BrowserModule,
