@@ -43,7 +43,11 @@ export class AuthService {
   }
 
   private updateCurrentUser = (user: User | undefined) => {
-    this.currentUser$.next(user);
-    this.router.navigateByUrl('/dashboard');
+    this.auth.authState.subscribe(state => {
+      user!.createdDate = state!.metadata.creationTime as string;
+      user!.lastAccess = state!.metadata.lastSignInTime as string;
+      this.currentUser$.next(user);
+      this.router.navigateByUrl('/dashboard');
+    })
   };
 }

@@ -3,6 +3,12 @@ import { Account, IAccount } from "@shared/models/account.model";
 
 export type UserCredential = { email: string, username: string };
 
+export enum Gender {
+  MALE= 'Uomo',
+  FEMALE = 'Donna',
+  OTHER = 'Altro'
+}
+
 export interface IUser {
   id?: string;
   name: string;
@@ -16,7 +22,12 @@ export interface IUser {
   publicProfile: boolean;
   accounts: IAccount[];
   createdDate: string;
-  status: 'active' | 'banned'
+  status: 'active' | 'banned';
+  phoneNumber: string;
+  biography: string;
+  website: string;
+  gender: Gender;
+  lastAccess: string;
 }
 
 export class User implements IUser {
@@ -37,7 +48,12 @@ export class User implements IUser {
     public publicProfile = false,
     public accounts: Account[] = [],
     public createdDate = '',
-    public status: 'active' | 'banned' = 'active'
+    public status: 'active' | 'banned' = 'active',
+    public phoneNumber = '',
+    public biography = '',
+    public website = '',
+    public gender = Gender.OTHER,
+    public lastAccess = ''
   ) {
   }
 
@@ -58,7 +74,12 @@ export class User implements IUser {
       user.publicProfile,
       accounts,
       user.createdDate,
-      user.status
+      user.status,
+      user.phoneNumber,
+      user.biography,
+      user.website,
+      user.gender,
+      user.lastAccess
     )
   }
 }
