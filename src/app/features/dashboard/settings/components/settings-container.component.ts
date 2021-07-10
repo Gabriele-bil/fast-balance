@@ -33,8 +33,17 @@ import { Subscription } from "rxjs";
                 <input type="text" class="form-control" placeholder="Username"
                        formControlName="username"/>
               </div>
-              <div class="col">
+              <div class="col-3">
                 <button class="btn btn-secondary h-100">Reimposta password</button>
+              </div>
+
+              <div class="col-3 d-flex align-items-center">
+                <div class="form-group form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" formControlName="publicProfile">
+                    <span class="">Profilo visibile</span>
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -81,7 +90,7 @@ import { Subscription } from "rxjs";
           </form>
 
           <div class="col-4">
-            <app-settings-summary [edit]="edit"></app-settings-summary>
+            <app-settings-summary [edit]="edit" [user]="currentUser"></app-settings-summary>
           </div>
         </div>
 
@@ -105,6 +114,15 @@ import { Subscription } from "rxjs";
           textarea {
             min-height: 80px;
           }
+
+          .form-check-label {
+            font-size: 1rem;
+
+            span {
+              display: inline-block;
+              margin-top: 3px;
+            }
+          }
         }
       }
     `,
@@ -113,7 +131,7 @@ import { Subscription } from "rxjs";
 export class SettingsContainerComponent implements OnInit, OnDestroy {
   public edit = false;
   public settingsUserForm!: FormGroup;
-  private currentUser: User = {} as User;
+  public currentUser: User = {} as User;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -146,6 +164,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
       name: formValue.name,
       surname: formValue.surname,
       username: formValue.username,
+      publicProfile: formValue.publicProfile,
       job: formValue.job,
       gender: formValue.gender,
       age: formValue.age,
@@ -170,6 +189,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
       name: [{ value: user.name, disabled: !this.edit }],
       surname: [{ value: user.surname, disabled: !this.edit }],
       username: [{ value: user.username, disabled: !this.edit }],
+      publicProfile: [{ value: user.publicProfile, disabled: !this.edit }],
       job: [{ value: user.job, disabled: !this.edit }],
       gender: [{ value: user.gender, disabled: !this.edit }],
       age: [{ value: user.age, disabled: !this.edit }],
