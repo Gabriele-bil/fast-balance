@@ -5,19 +5,21 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserService } from "@shared/services/user.service";
 import { Subscription } from "rxjs";
+import { FileService } from "@shared/services/file.service";
+import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: 'app-settings-container',
   template: `
     <div id="container" class="d-flex justify-content-center p-5">
-      <div class="background-white w-100 p-4">
+      <div class="background-white w-100 p-3">
         <h1>Impostazioni Account</h1>
         <div class="d-flex flex-row-reverse w-100">
           <button class="btn btn-primary" (click)="toggleForm()">
             {{ edit ? 'Viusalizza' : 'Modifica' }}
           </button>
         </div>
-        <div class="row w-100 justify-content-between mt-5">
+        <div class="row mt-3">
           <form class="col-8" [formGroup]="settingsUserForm">
             <div class="row">
               <div class="col">
@@ -90,11 +92,11 @@ import { Subscription } from "rxjs";
           </form>
 
           <div class="col-4">
-            <app-settings-summary [edit]="edit" [user]="currentUser"></app-settings-summary>
+            <app-settings-summary [edit]="edit" [user]="currentUser" (uploadFile)="uploadImage($event)"></app-settings-summary>
           </div>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center mt-3">
           <button class="btn btn-light py-2 px-4" (click)="cancelForm()">Annulla</button>
           <button class="btn btn-dark py-2 px-4" (click)="saveUser()">Salva</button>
         </div>
@@ -138,7 +140,8 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly fb: FormBuilder,
     private readonly router: Router,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly fileService: FileService,
   ) {
   }
 
@@ -177,11 +180,19 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
       biography: formValue.biography
     } as User;
 
-    this.subscriptions.push(this.userService.update(this.currentUser.id as string, body).subscribe(x => console.log(x)));
+    this.subscriptions.push(this.authService.update(this.currentUser.id as string, body).subscribe());
   }
 
   public cancelForm(): void {
     this.settingsUserForm.dirty ? console.log('modale') : console.log('nulla');
+  }
+
+  public uploadImage(event: Event) {
+    // @ts-ignore
+    const file = event.target.files[0];
+    this.fileService.uploadImage(this.currentUser.id as string, file).pipe(
+      switchMap(pictureUrl => this.authService.update(this.currentUser.id as string, { pictureUrl} as User))
+    ).subscribe(x => console.log(x))
   }
 
   private setForm(user: User) {

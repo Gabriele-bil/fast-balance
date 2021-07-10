@@ -36,6 +36,12 @@ export class AuthService {
     );
   }
 
+  public update(id: string, item: User): Observable<User | undefined> {
+    return this.userService.update(id, item).pipe(
+      tap(user => this.currentUser$!.next(user as User))
+    )
+  }
+
   public login(email: string, password: string): Observable<User | undefined> {
     return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(
       switchMap(userRes => this.userService.getUserByEmail(userRes.user?.email)),

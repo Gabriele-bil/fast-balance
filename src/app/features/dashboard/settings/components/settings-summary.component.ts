@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from "@shared/models/user.model";
 
 @Component({
@@ -9,7 +9,7 @@ import { User } from "@shared/models/user.model";
         <label class="text-center" [ngClass]="edit ? 'cursor-pointer' : 'cursor-not-allowed' ">
           <img [src]="user.pictureUrl ? user.pictureUrl : '/assets/images/user-icon.png'" alt="User icon">
           <h2 [ngClass]="{ 'text-secondary': !edit }">Cambia immagine</h2>
-          <input type="file" class="form-control-file d-none" [disabled]="!edit">
+          <input type="file" class="form-control-file d-none" [disabled]="!edit" (change)="uploadFile.emit($event)">
         </label>
       </div>
       <div class="d-flex flex-column">
@@ -28,7 +28,7 @@ import { User } from "@shared/models/user.model";
 
         .profile-img {
           img {
-            width: 5rem;
+            max-width: 70%;
           }
         }
       }
@@ -38,5 +38,5 @@ import { User } from "@shared/models/user.model";
 export class SettingsSummaryComponent {
   @Input() edit: boolean = false;
   @Input() user: User = {} as User;
-
+  @Output() uploadFile = new EventEmitter();
 }
