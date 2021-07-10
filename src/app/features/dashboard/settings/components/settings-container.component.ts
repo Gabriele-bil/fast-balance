@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from "@shared/services/auth.service";
 import { User } from "@shared/models/user.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { UserService } from "@shared/services/user.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-settings-container',
@@ -42,9 +45,9 @@ import { FormBuilder, FormGroup } from "@angular/forms";
               <div class="col-3">
                 <select class="form-control" formControlName="gender">
                   <option value="" disabled selected>Genere</option>
-                  <option>Uomo</option>
-                  <option>Donna</option>
-                  <option>Altro</option>
+                  <option value="male">Uomo</option>
+                  <option value="female">Donna</option>
+                  <option value="other">Altro</option>
                 </select>
               </div>
             </div>
@@ -83,8 +86,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-          <a class="btn btn-light py-2 px-4">Annulla</a>
-          <button class="btn btn-dark py-2 px-4">Salva</button>
+          <button class="btn btn-light py-2 px-4" (click)="cancelForm()">Annulla</button>
+          <button class="btn btn-dark py-2 px-4" (click)="saveUser()">Salva</button>
         </div>
       </div>
     </div>
@@ -107,20 +110,59 @@ import { FormBuilder, FormGroup } from "@angular/forms";
     `,
   ],
 })
-export class SettingsContainerComponent implements OnInit {
+export class SettingsContainerComponent implements OnInit, OnDestroy {
   public edit = false;
   public settingsUserForm!: FormGroup;
+  private currentUser: User = {} as User;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private readonly authService: AuthService, private readonly fb: FormBuilder) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly fb: FormBuilder,
+    private readonly router: Router,
+    private readonly userService: UserService
+  ) {
   }
 
   ngOnInit(): void {
-    this.authService.me.subscribe(user => this.setForm(user));
+    this.subscriptions.push(this.authService.me.subscribe(user => {
+      this.currentUser = user;
+      this.setForm(user);
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   public toggleForm(): void {
     this.edit = !this.edit;
     this.edit ? this.settingsUserForm.enable() : this.settingsUserForm.disable();
+  }
+
+  public saveUser(): void {
+    const formValue = this.settingsUserForm.value
+    const body = {
+      name: formValue.name,
+      surname: formValue.surname,
+      username: formValue.username,
+      job: formValue.job,
+      gender: formValue.gender,
+      age: formValue.age,
+      phoneNumber: formValue.phoneNumber,
+      location: {
+        city: formValue.city,
+        address: formValue.address,
+        cap: formValue.cap,
+      },
+      biography: formValue.biography
+    } as User;
+
+    this.subscriptions.push(this.userService.update(this.currentUser.id as string, body).subscribe(x => console.log(x)));
+  }
+
+  public cancelForm(): void {
+    this.settingsUserForm.dirty ? console.log('modale') : console.log('nulla');
   }
 
   private setForm(user: User) {

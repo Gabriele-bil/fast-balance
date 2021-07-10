@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { from, Observable } from "rxjs";
-import { map, switchMap } from "rxjs/operators";
+import { map, switchMap, tap } from "rxjs/operators";
 import { IUser, User } from "../models/user.model";
 import { GenericService } from "@shared/services/generic.service";
 
@@ -26,6 +26,12 @@ export class UserService extends GenericService<User> {
     return this.firestore.collection<User>(this.getCollectionName(), ref => ref.where('email', '==', email).limit(1)).snapshotChanges().pipe(
       map(users => ({ id: users[0].payload.doc.id, ...users[0].payload.doc.data() } as unknown as User))
     )
+  }
+
+  update(id: string, item: User): Observable<User | undefined> {
+    return super.update(id, item).pipe(
+      tap(user => localStorage.setItem('user', JSON.stringify(user)))
+    );
   }
 
   protected getCollectionName(): string {

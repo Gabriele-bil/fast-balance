@@ -27,7 +27,6 @@ export interface IUser {
   biography: string;
   website: string;
   gender: Gender;
-  lastAccess: string;
 }
 
 export class User implements IUser {
@@ -53,7 +52,6 @@ export class User implements IUser {
     public biography = '',
     public website = '',
     public gender = Gender.OTHER,
-    public lastAccess = ''
   ) {
   }
 
@@ -79,7 +77,6 @@ export class User implements IUser {
       user.biography,
       user.website,
       user.gender,
-      user.lastAccess
     )
   }
 }

@@ -28,7 +28,8 @@ export class AuthService {
   }
 
   public signup(username: string, email: string, password: string): Observable<User | undefined> {
-    const user = User.Build({ username, email } as IUser);
+    const createdDate = new Date().toISOString();
+    const user = User.Build({ username, email, createdDate } as IUser);
     return from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(
       switchMap(() => this.userService.createUser(user)),
       tap(this.updateCurrentUser)
@@ -47,11 +48,7 @@ export class AuthService {
   }
 
   private updateCurrentUser = (user: User | undefined) => {
-    this.auth.authState.subscribe(state => {
-      user!.createdDate = state!.metadata.creationTime as string;
-      user!.lastAccess = state!.metadata.lastSignInTime as string;
       this.currentUser$!.next(user as User);
       this.router.navigateByUrl('/dashboard');
-    })
   };
 }
