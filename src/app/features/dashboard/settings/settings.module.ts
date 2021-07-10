@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsContainerComponent } from './components/settings-container.component';
+import { SettingsSummaryComponent } from './components/settings-summary.component';
 
 
 @NgModule({
   declarations: [
-    SettingsContainerComponent
+    SettingsContainerComponent,
+    SettingsSummaryComponent
   ],
   imports: [
     CommonModule,
