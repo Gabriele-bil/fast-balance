@@ -3,10 +3,10 @@ import { AuthService } from "@shared/services/auth.service";
 import { User } from "@shared/models/user.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
-import { UserService } from "@shared/services/user.service";
 import { Subscription } from "rxjs";
 import { FileService } from "@shared/services/file.service";
 import { switchMap } from "rxjs/operators";
+import { SpinnerService } from "@shared/services/spinner.service";
 
 @Component({
   selector: 'app-settings-container',
@@ -14,7 +14,7 @@ import { switchMap } from "rxjs/operators";
     <div id="container" class="d-flex justify-content-center p-5">
       <div class="background-white w-100 p-3">
         <h1>Impostazioni Account</h1>
-        
+
         <div class="d-flex flex-row-reverse w-100">
           <button class="btn btn-primary" (click)="toggleForm()">
             {{ edit ? 'Viusalizza' : 'Modifica' }}
@@ -98,7 +98,8 @@ import { switchMap } from "rxjs/operators";
           </form>
 
           <div class="col-4">
-            <app-settings-summary [edit]="edit" [user]="currentUser" (uploadFile)="uploadImage($event)"></app-settings-summary>
+            <app-settings-summary [edit]="edit" [user]="currentUser"
+                                  (uploadFile)="uploadImage($event)"></app-settings-summary>
           </div>
         </div>
 
@@ -146,8 +147,8 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly fb: FormBuilder,
     private readonly router: Router,
-    private readonly userService: UserService,
     private readonly fileService: FileService,
+    private readonly spinnerService: SpinnerService
   ) {
   }
 
@@ -186,8 +187,12 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
       },
       biography: formValue.biography
     } as User;
-
-    this.subscriptions.push(this.authService.update(this.currentUser.id as string, body).subscribe());
+    this.spinnerService.showSpinner$.next(true);
+    this.subscriptions.push(this.authService.update(this.currentUser.id as string, body)
+      .subscribe(
+        () => setTimeout(() => this.spinnerService.showSpinner$.next(false), 300),
+        () => setTimeout(() => this.spinnerService.showSpinner$.next(false), 300),
+      ));
   }
 
   public cancelForm(): void {
@@ -198,7 +203,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     // @ts-ignore
     const file = event.target.files[0];
     this.fileService.uploadImage(this.currentUser.id as string, file).pipe(
-      switchMap(pictureUrl => this.authService.update(this.currentUser.id as string, { pictureUrl} as User))
+      switchMap(pictureUrl => this.authService.update(this.currentUser.id as string, { pictureUrl } as User))
     ).subscribe(x => console.log(x))
   }
 
