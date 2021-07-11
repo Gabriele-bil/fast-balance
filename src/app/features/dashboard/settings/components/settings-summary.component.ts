@@ -28,7 +28,7 @@ import { User } from "@shared/models/user.model";
 
         .profile-img {
           img {
-            max-width: 200px;
+            max-width: 180px;
           }
         }
       }

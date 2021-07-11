@@ -14,7 +14,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
 @Component({
   selector: 'app-settings-container',
   template: `
-    <div id="container" class="d-flex justify-content-center p-5">
+    <div id="container" class="d-flex justify-content-center p-3 p-md-4">
       <div class="background-white w-100 p-3">
         <h1>Impostazioni Account</h1>
 
@@ -25,9 +25,17 @@ import { SnackbarService } from '@shared/services/snackbar.service';
         </div>
 
         <div class="row mt-3">
-          <form class="col-8" [formGroup]="settingsUserForm">
+          <div class="col-12 col-lg-3 mb-3 mb-lg-0">
+            <app-settings-summary
+              [edit]="edit"
+              [user]="currentUser"
+              (uploadFile)="uploadImage($event)"
+            ></app-settings-summary>
+          </div>
+
+          <form class="col-12 col-lg-9" [formGroup]="settingsUserForm">
             <div class="row">
-              <div class="col">
+              <div class="col-12 col-sm-6 mb-3 mb-sm-0">
                 <input
                   type="text"
                   class="form-control"
@@ -35,7 +43,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                   formControlName="name"
                 />
               </div>
-              <div class="col">
+              <div class="col-12 col-sm-6 mb-3 mb-md-0">
                 <input
                   type="text"
                   class="form-control"
@@ -45,8 +53,8 @@ import { SnackbarService } from '@shared/services/snackbar.service';
               </div>
             </div>
 
-            <div class="row my-5">
-              <div class="col">
+            <div class="row my-0 my-md-5">
+              <div class="col-12 col-lg-6 mb-3 mb-lg-0">
                 <input
                   type="text"
                   class="form-control"
@@ -54,7 +62,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                   formControlName="username"
                 />
               </div>
-              <div class="col-3">
+              <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-md-0">
                 <button
                   class="btn btn-secondary h-100"
                   (click)="resetPassword()"
@@ -63,7 +71,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                 </button>
               </div>
 
-              <div class="col-3 d-flex align-items-center">
+              <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-md-0 d-flex align-items-center">
                 <div class="form-group form-check">
                   <label class="form-check-label">
                     <input
@@ -77,8 +85,8 @@ import { SnackbarService } from '@shared/services/snackbar.service';
               </div>
             </div>
 
-            <div class="row my-5">
-              <div class="col">
+            <div class="row my-0 my-md-5">
+              <div class="col-12 col-md-8 mb-3 mb-md-0">
                 <input
                   type="text"
                   class="form-control"
@@ -86,7 +94,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                   formControlName="job"
                 />
               </div>
-              <div class="col-3">
+              <div class="col-12 col-md-4 mb-3 mb-md-0">
                 <select class="form-control" formControlName="gender">
                   <option value="" disabled selected>Genere</option>
                   <option value="male">Uomo</option>
@@ -96,8 +104,8 @@ import { SnackbarService } from '@shared/services/snackbar.service';
               </div>
             </div>
 
-            <div class="row my-5">
-              <div class="col-3">
+            <div class="row my-0 my-md-5">
+              <div class="col-4">
                 <input
                   type="number"
                   class="form-control"
@@ -105,7 +113,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                   formControlName="age"
                 />
               </div>
-              <div class="col">
+              <div class="col-8 col-md-4 mb-3 mb-md-0">
                 <input
                   type="text"
                   class="form-control"
@@ -114,7 +122,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                 />
               </div>
 
-              <div class="col">
+              <div class="col-12 col-md-4 mb-3 mb-md-0">
                 <input
                   type="text"
                   class="form-control"
@@ -124,8 +132,8 @@ import { SnackbarService } from '@shared/services/snackbar.service';
               </div>
             </div>
 
-            <div class="row my-5">
-              <div class="col">
+            <div class="row my-0 my-md-5">
+              <div class="col-12 col-md-4 mb-3 mb-md-0">
                 <input
                   type="text"
                   class="form-control"
@@ -133,7 +141,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                   formControlName="city"
                 />
               </div>
-              <div class="col">
+              <div class="col-12 col-sm-8 col-md-6 mb-3 mb-sm-0">
                 <input
                   type="text"
                   class="form-control"
@@ -141,7 +149,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                   formControlName="address"
                 />
               </div>
-              <div class="col">
+              <div class="col-12 col-sm-4 col-md-2 mb-3 mb-md-0">
                 <input
                   type="text"
                   class="form-control"
@@ -151,7 +159,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
               </div>
             </div>
 
-            <div class="row my-5">
+            <div class="row my-0 my-md-5">
               <div class="col">
                 <textarea
                   class="form-control"
@@ -161,14 +169,6 @@ import { SnackbarService } from '@shared/services/snackbar.service';
               </div>
             </div>
           </form>
-
-          <div class="col-4">
-            <app-settings-summary
-              [edit]="edit"
-              [user]="currentUser"
-              (uploadFile)="uploadImage($event)"
-            ></app-settings-summary>
-          </div>
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
