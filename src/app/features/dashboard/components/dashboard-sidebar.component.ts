@@ -33,7 +33,7 @@ import { Subscription } from "rxjs";
     `
       #container {
         width: 80px;
-        height: 100vh;
+        height: 100%;
         background-color: #fafafa;
 
         img {
