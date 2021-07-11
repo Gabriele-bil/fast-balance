@@ -200,11 +200,15 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
   }
 
   public uploadImage(event: Event) {
+    this.spinnerService.showSpinner$.next(true);
     // @ts-ignore
     const file = event.target.files[0];
     this.fileService.uploadImage(this.currentUser.id as string, file).pipe(
       switchMap(pictureUrl => this.authService.update(this.currentUser.id as string, { pictureUrl } as User))
-    ).subscribe(x => console.log(x))
+    ).subscribe(
+      () => this.spinnerService.showSpinner$.next(false),
+      () => this.spinnerService.showSpinner$.next(false)
+    )
   }
 
   private setForm(user: User) {
