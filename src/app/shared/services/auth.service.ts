@@ -12,7 +12,7 @@ import { IUser, User } from "../models/user.model";
 })
 export class AuthService {
 
-  private currentUser$: BehaviorSubject<User> | undefined = new BehaviorSubject<User>(User.Build({} as User));
+  private currentUser$ = new BehaviorSubject<User | undefined>(undefined);
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
@@ -54,6 +54,16 @@ export class AuthService {
 
   public forgotPassword(passwordResetEmail: string): Observable<void> {
     return from(this.auth.sendPasswordResetEmail(passwordResetEmail))
+  }
+
+  public signOut(): Observable<void> {
+    return from(this.auth.signOut()).pipe(
+      tap(() => {
+        localStorage.removeItem('user');
+        this.currentUser$?.next(undefined);
+        this.router.navigateByUrl('');
+      })
+    )
   }
 
   private updateCurrentUser = (user: User | undefined) => {
