@@ -8,7 +8,6 @@ export interface ICard {
   iconUrl: string;
   color: string;
   balance: number;
-  paymentLimit: number;
   monthlyBudget: number;
   payments: IPayment[];
   usersId: string[];
@@ -24,7 +23,6 @@ export class Card {
     public color = '',
     public balance = 0,
     public monthlyBudget = 0,
-    public paymentLimit = 0,
     public payments: Payment[] = [],
     public usersId: string[] = [],
   ) {
@@ -42,7 +40,6 @@ export class Card {
       card.color,
       card.balance,
       card.monthlyBudget,
-      card.paymentLimit,
       payments,
       card.usersId
     );
