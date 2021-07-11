@@ -12,6 +12,8 @@ export interface IPayment {
   note: string;
   tags: string[];
   importance: Importance;
+  isRecurrence: boolean;
+  recurrenceInDays: number
 }
 
 export class Payment implements IPayment {
@@ -22,7 +24,9 @@ export class Payment implements IPayment {
     public date = '',
     public note = '',
     public tags: string[] = [],
-    public importance = Importance.LOW
+    public importance = Importance.LOW,
+    public isRecurrence = false,
+    public recurrenceInDays = 0
   ) {
   }
 
@@ -34,7 +38,9 @@ export class Payment implements IPayment {
       payment.date,
       payment.note,
       payment.tags,
-      payment.importance
+      payment.importance,
+      payment.isRecurrence,
+      payment.recurrenceInDays
     )
   }
 }
