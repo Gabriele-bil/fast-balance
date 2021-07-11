@@ -1,9 +1,17 @@
+export enum Importance {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high'
+}
+
 export interface IPayment {
   id?: string;
   quantity: number;
   currency: 'eur' | 'usd'
   date: string;
   note: string;
+  tags: string[];
+  importance: Importance;
 }
 
 export class Payment implements IPayment {
@@ -13,6 +21,8 @@ export class Payment implements IPayment {
     public currency: 'eur' | 'usd' = 'eur',
     public date = '',
     public note = '',
+    public tags: string[] = [],
+    public importance = Importance.LOW
   ) {
   }
 
@@ -22,7 +32,9 @@ export class Payment implements IPayment {
       payment.quantity,
       payment.currency,
       payment.date,
-      payment.note
+      payment.note,
+      payment.tags,
+      payment.importance
     )
   }
 }
