@@ -5,10 +5,13 @@ export interface ICard {
   name: string;
   description: string;
   backgroundUrl: string;
+  iconUrl: string;
   color: string;
   balance: number;
   paymentLimit: number;
+  monthlyBudget: number;
   payments: IPayment[];
+  usersId: string[];
 }
 
 export class Card {
@@ -17,10 +20,13 @@ export class Card {
     public name = '',
     public description = '',
     public backgroundUrl = '',
+    public iconUrl = '',
     public color = '',
     public balance = 0,
+    public monthlyBudget = 0,
     public paymentLimit = 0,
-    public payments: Payment[] = []
+    public payments: Payment[] = [],
+    public usersId: string[] = [],
   ) {
   }
 
@@ -32,10 +38,13 @@ export class Card {
       card.name,
       card.description,
       card.backgroundUrl,
+      card.iconUrl,
       card.color,
       card.balance,
+      card.monthlyBudget,
       card.paymentLimit,
-      payments
+      payments,
+      card.usersId
     );
   }
 }

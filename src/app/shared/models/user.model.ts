@@ -1,10 +1,10 @@
 import { ILocation } from "@shared/models/location.model";
-import { Account, IAccount } from "@shared/models/account.model";
+import { Card, ICard } from "@shared/models/card.model";
 
 export type UserCredential = { email: string, username: string };
 
 export enum Gender {
-  MALE= 'Uomo',
+  MALE = 'Uomo',
   FEMALE = 'Donna',
   OTHER = 'Altro'
 }
@@ -20,7 +20,7 @@ export interface IUser {
   pictureUrl: string;
   location: ILocation;
   publicProfile: boolean;
-  accounts: IAccount[];
+  cards: ICard[];
   createdDate: string;
   status: 'active' | 'banned';
   phoneNumber: string;
@@ -46,7 +46,7 @@ export class User implements IUser {
       cap: '',
     },
     public publicProfile = false,
-    public accounts: Account[] = [],
+    public cards: Card[] = [],
     public createdDate = '',
     public status: 'active' | 'banned' = 'active',
     public phoneNumber = '',
@@ -59,7 +59,7 @@ export class User implements IUser {
 
   public static Build(user: IUser): User {
 
-    const accounts = user.accounts?.map(account => Account.Build(account));
+    const cards = user.cards?.map(card => Card.Build(card));
 
     return new this(
       user.id,
@@ -72,7 +72,7 @@ export class User implements IUser {
       user.pictureUrl,
       user.location,
       user.publicProfile,
-      accounts,
+      cards,
       user.createdDate,
       user.status,
       user.phoneNumber,
