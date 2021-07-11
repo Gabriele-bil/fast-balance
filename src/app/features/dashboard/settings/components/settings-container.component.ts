@@ -9,6 +9,7 @@ import { switchMap } from 'rxjs/operators';
 import { SpinnerService } from '@shared/services/spinner.service';
 import { ModalService } from '@shared/services/modal.service';
 import { ModalData } from '@shared/models/modal.model';
+import { SnackbarService } from '@shared/services/snackbar.service';
 
 @Component({
   selector: 'app-settings-container',
@@ -54,7 +55,10 @@ import { ModalData } from '@shared/models/modal.model';
                 />
               </div>
               <div class="col-3">
-                <button class="btn btn-secondary h-100">
+                <button
+                  class="btn btn-secondary h-100"
+                  (click)="resetPassword()"
+                >
                   Reimposta password
                 </button>
               </div>
@@ -223,7 +227,8 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly fileService: FileService,
     private readonly spinnerService: SpinnerService,
-    private readonly modalService: ModalService
+    private readonly modalService: ModalService,
+    private readonly snackBarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -244,6 +249,14 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     this.edit
       ? this.settingsUserForm.enable()
       : this.settingsUserForm.disable();
+  }
+
+  public resetPassword(): void {
+    this.authService
+      .forgotPassword(this.currentUser.email)
+      .subscribe(() =>
+        this.snackBarService.openSnackBar('Ti è stata mandata una mail')
+      );
   }
 
   public saveUser(): void {
@@ -290,7 +303,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public uploadImage(event: Event) {
+  public uploadImage(event: Event): void {
     this.spinnerService.showSpinner$.next(true);
     // @ts-ignore
     const file = event.target.files[0];
@@ -310,7 +323,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
       );
   }
 
-  private setForm(user: User) {
+  private setForm(user: User): void {
     this.settingsUserForm = this.fb.group({
       name: [{ value: user.name, disabled: !this.edit }],
       surname: [{ value: user.surname, disabled: !this.edit }],

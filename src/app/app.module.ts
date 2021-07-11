@@ -10,6 +10,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '@environments//environment.prod';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { SpinnerComponent } from '@shared/components/spinner.component';
+import { SharedModule } from '@shared/modules/shared.module';
 @NgModule({
   declarations: [AppComponent, SpinnerComponent],
   imports: [
@@ -20,6 +21,7 @@ import { SpinnerComponent } from '@shared/components/spinner.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
