@@ -7,6 +7,8 @@ import { Subscription } from "rxjs";
 import { FileService } from "@shared/services/file.service";
 import { switchMap } from "rxjs/operators";
 import { SpinnerService } from "@shared/services/spinner.service";
+import { ModalService } from "@shared/services/modal.service";
+import { SettingsModalComponent } from "@features/dashboard/settings/components/settings-modal.component";
 
 @Component({
   selector: 'app-settings-container',
@@ -148,7 +150,8 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly fileService: FileService,
-    private readonly spinnerService: SpinnerService
+    private readonly spinnerService: SpinnerService,
+    private readonly modalService: ModalService
   ) {
   }
 
@@ -196,7 +199,19 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
   }
 
   public cancelForm(): void {
-    this.settingsUserForm.dirty ? console.log('modale') : console.log('nulla');
+    if (this.settingsUserForm.dirty) {
+      const modalRef = this.modalService.openCustom(SettingsModalComponent);
+      modalRef.componentInstance.confirm.subscribe(
+        (result: boolean) => {
+          if (result) {
+            modalRef.close()
+          }
+          this.router.navigateByUrl('/dashboard')
+        }
+      );
+    } else {
+      this.router.navigateByUrl('/dashboard')
+    }
   }
 
   public uploadImage(event: Event) {
