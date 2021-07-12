@@ -4,6 +4,7 @@ import { DashboardContainerComponent } from "./components/dashboard-container.co
 
 const welcomeModule = () => import('./welcome/welcome.module').then(w => w.WelcomeModule);
 const settingsModule = () => import('./settings/settings.module').then(s => s.SettingsModule);
+const cmsModule = () => import('./cms/cms.module').then(c => c.CmsModule);
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'welcome' },
       { path: 'welcome', loadChildren: welcomeModule },
-      { path: 'settings', loadChildren: settingsModule }
+      { path: 'settings', loadChildren: settingsModule },
+      { path: 'cms', loadChildren: cmsModule },
     ],
   },
 ]
