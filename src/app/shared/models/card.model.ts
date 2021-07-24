@@ -22,7 +22,7 @@ export class Card implements ICard {
     public description = '',
     public backgroundUrl = '',
     public iconUrl = WalletImg.COLORED,
-    public color = Color.BLUE,
+    public color = Color.WHITE,
     public balance = 0,
     public monthlyBudget = 0,
     public limitBudget = false,
