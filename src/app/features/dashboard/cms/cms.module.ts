@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CmsRoutingModule } from './cms-routing.module';
 import { CardsComponent } from './components/cards.component';
 import { EditCardComponent } from './components/edit-card.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { EditCardComponent } from './components/edit-card.component';
   ],
   imports: [
     CommonModule,
-    CmsRoutingModule
+    CmsRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class CmsModule { }
