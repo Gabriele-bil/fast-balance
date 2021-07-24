@@ -9,16 +9,24 @@ import { Subscription } from "rxjs";
       id="container"
       class="d-flex flex-column justify-content-between align-items-center py-3"
     >
-      <a routerLink="/dashboard/welcome" routerLinkActive="active p-1">
-        <img
-          src="/assets/images/brand/icon.png"
-          alt="Brand icon"
-          class="brand"
-        />
-      </a>
+      <div class="d-flex flex-column align-items-center">
+        <a routerLink="/dashboard/welcome" class="p-1 pt-3" routerLinkActive="active">
+          <img
+            src="/assets/images/brand/icon.png"
+            alt="Brand icon"
+          />
+        </a>
+
+        <a routerLink="/dashboard/cms/cards" class="p-1 pt-3" routerLinkActive="active">
+          <img
+            src="/assets/images/icons/black-wallet.png"
+            alt="Le tue carte"
+          />
+        </a>
+      </div>
 
       <div class="profile-container d-flex flex-column">
-        <a routerLink="/dashboard/settings" routerLinkActive="active p-1">
+        <a routerLink="/dashboard/settings" class="p-1 pt-3" routerLinkActive="active">
           <img src="/assets/images/user-icon.png" alt="User image icon"
           /></a>
 

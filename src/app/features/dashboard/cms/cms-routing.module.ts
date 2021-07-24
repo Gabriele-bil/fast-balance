@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CardComponent } from "@features/dashboard/cms/components/card.component";
+import { CardsComponent } from "@features/dashboard/cms/components/cards.component";
+import { EditCardComponent } from "@features/dashboard/cms/components/edit-card.component";
 
 const routes: Routes = [
-  { path: 'card', component: CardComponent },
-  { path: 'card/:id', component: CardComponent }
+  { path: 'cards', component: CardsComponent },
+  { path: 'cards/edit/:id', component: EditCardComponent },
+  { path: 'cards/add', component: EditCardComponent }
 ];
 
 @NgModule({

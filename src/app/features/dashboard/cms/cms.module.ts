@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CmsRoutingModule } from './cms-routing.module';
-import { CardComponent } from './components/card.component';
+import { CardsComponent } from './components/cards.component';
+import { EditCardComponent } from './components/edit-card.component';
 
 
 @NgModule({
   declarations: [
-    CardComponent
+    CardsComponent,
+    EditCardComponent
   ],
   imports: [
     CommonModule,

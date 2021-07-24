@@ -189,23 +189,20 @@ import { SnackbarService } from '@shared/services/snackbar.service';
         width: calc(100vw - 80px);
         min-height: 100vh;
 
-        .background-white {
-          background-color: #fafafa;
+        textarea {
+          min-height: 80px;
+        }
 
-          textarea {
-            min-height: 80px;
-          }
+        .form-check-label {
+          font-size: 1rem;
 
-          .form-check-label {
-            font-size: 1rem;
-
-            span {
-              display: inline-block;
-              margin-top: 3px;
-            }
+          span {
+            display: inline-block;
+            margin-top: 3px;
           }
         }
       }
+
     `,
   ],
 })
@@ -229,7 +226,8 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     private readonly spinnerService: SpinnerService,
     private readonly modalService: ModalService,
     private readonly snackBarService: SnackbarService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.subscriptions.push(
