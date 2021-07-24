@@ -8,7 +8,7 @@ import { Color, WalletImg } from "@shared/models/enums";
       <h2>Media</h2>
       <div class="col-4">
         <label class="text-center cursor-pointer">
-          <img [src]="" alt="card background"/>
+          <img [src]="backgroundUrl" alt="card background" class="img-fluid"/>
           <h2>Inserisci immagine di sfondo</h2>
           <input
             type="file"
@@ -100,6 +100,7 @@ import { Color, WalletImg } from "@shared/models/enums";
 export class EditCardMediaComponent {
   @Input() selectedColor = Color.WHITE;
   @Input() selectedPicture = WalletImg.COLORED;
+  @Input() backgroundUrl = '';
 
   @Output() uploadImage = new EventEmitter<Event>();
   @Output() handleSelectedColor = new EventEmitter<Color>()

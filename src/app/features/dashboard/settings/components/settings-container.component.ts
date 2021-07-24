@@ -2,13 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { User } from '@shared/models/user.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FileService } from '@shared/services/file.service';
 import { switchMap } from 'rxjs/operators';
 import { SpinnerService } from '@shared/services/spinner.service';
 import { ModalService } from '@shared/services/modal.service';
-import { ModalData } from '@shared/models/modal.model';
 import { SnackbarService } from '@shared/services/snackbar.service';
 
 @Component({
@@ -211,17 +209,10 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
   public settingsUserForm!: FormGroup;
   public currentUser: User = {} as User;
   private subscriptions: Subscription[] = [];
-  private modalText: ModalData = {
-    title: 'Perderai tutte le modifiche effettuate',
-    description: 'Sei sicuro di voler uscire?',
-    cancelButton: 'No',
-    confirmButton: 'Si',
-  };
 
   constructor(
     private readonly authService: AuthService,
     private readonly fb: FormBuilder,
-    private readonly router: Router,
     private readonly fileService: FileService,
     private readonly spinnerService: SpinnerService,
     private readonly modalService: ModalService,
@@ -288,17 +279,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
   }
 
   public cancelForm(): void {
-    if (this.settingsUserForm.dirty) {
-      const modalRef = this.modalService.openModal(this.modalText);
-      modalRef.componentInstance.confirm.subscribe((result: boolean) => {
-        if (result) {
-          modalRef.close();
-        }
-        this.router.navigateByUrl('/dashboard');
-      });
-    } else {
-      this.router.navigateByUrl('/dashboard');
-    }
+    this.modalService.cancelForm(this.settingsUserForm.dirty, '/dashboard');
   }
 
   public uploadImage(event: Event): void {

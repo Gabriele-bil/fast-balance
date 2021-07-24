@@ -6,12 +6,20 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '@shared/components/modal.component';
 import { ModalData } from '@shared/models/modal.model';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ModalService {
-  constructor(private readonly modalService: NgbModal) {}
+  constructor(private readonly modalService: NgbModal, private readonly router: Router,) {}
+
+  public cancelFormtext: ModalData = {
+    title: 'Perderai tutte le modifiche effettuate',
+    description: 'Sei sicuro di voler uscire?',
+    cancelButton: 'No',
+    confirmButton: 'Si',
+  };
 
   public openModal(data: ModalData): NgbModalRef {
     const modalRef = this.modalService.open(ModalComponent, { centered: true });
@@ -29,5 +37,19 @@ export class ModalService {
     modalRef.componentInstance.data = data;
 
     return modalRef;
+  }
+
+  public cancelForm(formDirty: boolean, redirectUrl: string): void {
+    if (formDirty) {
+      const modalRef = this.openModal(this.cancelFormtext);
+      modalRef.componentInstance.confirm.subscribe((result: boolean) => {
+        if (result) {
+          modalRef.close();
+        }
+        this.router.navigateByUrl(redirectUrl);
+      });
+    } else {
+      this.router.navigateByUrl(redirectUrl);
+    }
   }
 }
