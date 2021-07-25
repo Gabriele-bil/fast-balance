@@ -15,8 +15,8 @@ import { ModalService } from "@shared/services/modal.service";
   template: `
     <div id="container" class="d-flex justify-content-center p-3 p-md-4">
       <div class="background-white w-100 p-3">
-        <h1>Aggiungi Carta</h1>
-        <form class="d-flex flex-column justify-content-between" [formGroup]="cardForm" (ngSubmit)="saveCards()">
+        <h1>{{ cardId ? 'Modifica Carta' : 'Aggiungi Carta'}}</h1>
+        <form class="d-flex flex-column justify-content-between" [formGroup]="cardForm">
           <div class="row">
             <h2>Informazioni di base</h2>
             <div class="col-12 col-sm-8">
@@ -44,7 +44,7 @@ import { ModalService } from "@shared/services/modal.service";
             [selectedPicture]="iconUrl"
             [backgroundUrl]="backGroundUrl"
             (handleSelectedColor)="color = $event"
-            (handleSelectedPicture)="backGroundUrl = $event"
+            (handleSelectedPicture)="iconUrl = $event"
             (uploadImage)="uploadImage($event)">
           </app-edit-card-media>
 
@@ -83,10 +83,10 @@ import { ModalService } from "@shared/services/modal.service";
           </div>
 
           <div class="d-flex justify-content-between align-items-center mt-3">
-            <button type="button" class="btn btn-light py-2 px-4" (click)="cancelForm()">
+            <button class="btn btn-light py-2 px-4" (click)="cancelForm()">
               Annulla
             </button>
-            <button type="submit" class="btn btn-dark py-2 px-4">
+            <button class="btn btn-dark py-2 px-4" (click)="saveCard()" [disabled]="cardForm.invalid">
               Salva
             </button>
           </div>
@@ -109,11 +109,19 @@ import { ModalService } from "@shared/services/modal.service";
   ],
 })
 export class EditCardComponent implements OnInit {
-  public cardForm!: FormGroup;
+  public cardForm: FormGroup = this.formBuilder.group({
+    name: ['', Validators.required],
+    description: ['', Validators.required],
+    balance: [0],
+    limitBudget: [false],
+    monthlyBudget: ['']
+  });
+
   public backGroundUrl = '';
   public iconUrl: WalletImg = WalletImg.COLORED;
   public color: Color = Color.WHITE;
   public currentUser!: User;
+  public cardId = '';
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -124,26 +132,18 @@ export class EditCardComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly modalService: ModalService
   ) {
-    this.activatedRoute.params.subscribe((params) =>
-      params.id ? console.log(params.id) : console.log('nulla')
-    );
+  }
+
+  ngOnInit(): void {
+    this.cardId = this.activatedRoute.snapshot.params.id ? this.activatedRoute.snapshot.params.id : '';
+    this.authService.me.subscribe(user => this.currentUser = user);
+    this.getCard();
   }
 
   public handleBudget(): void {
     this.cardForm.get('limitBudget')?.value
       ? this.cardForm.get('monthlyBudget')?.disable()
       : this.cardForm.get('monthlyBudget')?.enable();
-  }
-
-  ngOnInit(): void {
-    this.authService.me.subscribe(user => this.currentUser = user);
-    this.cardForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required,],
-      balance: [0],
-      limitBudget: [false],
-      monthlyBudget: ['']
-    })
   }
 
   public uploadImage(event: Event): void {
@@ -160,7 +160,7 @@ export class EditCardComponent implements OnInit {
     );
   }
 
-  public saveCards(): void {
+  public saveCard(): void {
     if (this.cardForm.valid) {
       this.spinnerService.showSpinner$.next(true);
       const body = {
@@ -174,21 +174,64 @@ export class EditCardComponent implements OnInit {
         limitBudget: this.cardForm.value.limitBudget,
       } as Card;
 
-      this.cardService.create(body).subscribe(
-        (card) => {
-          if (card) {
-            const cards = { ...this.currentUser.cards, card };
-            // @ts-ignore
-            this.authService.update(this.currentUser.id, { cards })
-          }
-          this.spinnerService.showSpinner$.next(false)
-        },
-        () => this.spinnerService.showSpinner$.next(false),
-      )
+      this.cardId ? this.updateCard(body) : this.addNewCard(body);
     }
   }
 
   public cancelForm(): void {
     this.modalService.cancelForm(this.cardForm.dirty, '/dashboard/cms/cards');
+  }
+
+  private getCard(): void {
+    if (this.activatedRoute.snapshot.params.id) {
+      setTimeout(() => this.spinnerService.showSpinner$.next(true), 0);
+      this.cardService.getById(this.cardId).subscribe(
+        card => {
+          this.cardForm.patchValue({
+            name: card?.name,
+            description: card?.description,
+            balance: card?.balance,
+            limitBudget: card?.limitBudget,
+            monthlyBudget: card?.monthlyBudget
+          });
+          this.backGroundUrl = card?.backgroundUrl ? card.backgroundUrl : '';
+          this.iconUrl = card?.iconUrl ? card.iconUrl : WalletImg.COLORED;
+          this.color = card?.color ? card.color : Color.WHITE;
+          this.spinnerService.showSpinner$.next(false);
+          this.handleBudget();
+        }
+      )
+    }
+  }
+
+  private updateCard(body: Card): void {
+    console.log(body);
+    this.cardService.update(this.cardId, body).subscribe(
+      card => {
+        if (card) {
+          const index = this.currentUser.cards.findIndex(c => c.id === this.cardId);
+          const cards =  this.currentUser.cards;
+          cards.splice(index, 1, card);
+          // @ts-ignore
+          this.authService.update(this.currentUser.id, { cards }).subscribe();
+        }
+        this.spinnerService.showSpinner$.next(false);
+      },
+      () => this.spinnerService.showSpinner$.next(false)
+    )
+  }
+
+  private addNewCard(body: Card): void {
+    this.cardService.create(body).subscribe(
+      (card) => {
+        if (card) {
+          const cards = this.currentUser.cards.length ? [...this.currentUser.cards, { ...card }] : [{ ...card }];
+          // @ts-ignore
+          this.authService.update(this.currentUser.id, { cards }).subscribe();
+        }
+        this.spinnerService.showSpinner$.next(false)
+      },
+      () => this.spinnerService.showSpinner$.next(false),
+    )
   }
 }
