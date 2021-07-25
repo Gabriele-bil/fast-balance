@@ -138,12 +138,13 @@ export class EditCardComponent implements OnInit {
     this.cardId = this.activatedRoute.snapshot.params.id ? this.activatedRoute.snapshot.params.id : '';
     this.authService.me.subscribe(user => this.currentUser = user);
     this.getCard();
+    this.handleBudget();
   }
 
   public handleBudget(): void {
-    this.cardForm.get('limitBudget')?.value
-      ? this.cardForm.get('monthlyBudget')?.disable()
-      : this.cardForm.get('monthlyBudget')?.enable();
+    setTimeout(() => this.cardForm.get('limitBudget')?.value
+      ? this.cardForm.get('monthlyBudget')?.enable()
+      : this.cardForm.get('monthlyBudget')?.disable(), 0);
   }
 
   public uploadImage(event: Event): void {
@@ -170,10 +171,11 @@ export class EditCardComponent implements OnInit {
         iconUrl: this.iconUrl,
         color: this.color,
         balance: this.cardForm.value.balance,
-        monthlyBudget: this.cardForm.value.monthlyBudget,
+        monthlyBudget: this.cardForm.value.monthlyBudget ? this.cardForm.value.monthlyBudget : '',
         limitBudget: this.cardForm.value.limitBudget,
       } as Card;
 
+      this.cardForm.reset(this.cardForm.value);
       this.cardId ? this.updateCard(body) : this.addNewCard(body);
     }
   }
@@ -192,7 +194,7 @@ export class EditCardComponent implements OnInit {
             description: card?.description,
             balance: card?.balance,
             limitBudget: card?.limitBudget,
-            monthlyBudget: card?.monthlyBudget
+            monthlyBudget: card?.monthlyBudget ? card?.monthlyBudget : ''
           });
           this.backGroundUrl = card?.backgroundUrl ? card.backgroundUrl : '';
           this.iconUrl = card?.iconUrl ? card.iconUrl : WalletImg.COLORED;
@@ -206,6 +208,7 @@ export class EditCardComponent implements OnInit {
 
   private updateCard(body: Card): void {
     console.log(body);
+    this.spinnerService.showSpinner$.next(true);
     this.cardService.update(this.cardId, body).subscribe(
       card => {
         if (card) {
