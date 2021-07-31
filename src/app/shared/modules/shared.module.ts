@@ -7,12 +7,14 @@ import { MoneyComponent } from '@shared/components/money.component';
 import { ModalComponent } from '@shared/components/modal.component';
 import { PaymentEditComponent } from "@shared/components/payment-edit.component";
 import { RouterModule } from "@angular/router";
+import { ConfirmButtonsComponent } from "@shared/components/confirm-buttons.component";
 
 const sharedComponents = [
   LoadingButtonComponent,
   MoneyComponent,
   ModalComponent,
-  PaymentEditComponent
+  PaymentEditComponent,
+  ConfirmButtonsComponent
 ];
 const sharedModules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
 

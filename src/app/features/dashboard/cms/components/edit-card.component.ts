@@ -82,14 +82,7 @@ import { ModalService } from "@shared/services/modal.service";
             </div>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center mt-3">
-            <button class="btn btn-light py-2 px-4" (click)="cancelForm()">
-              Annulla
-            </button>
-            <button class="btn btn-dark py-2 px-4" (click)="saveCard()" [disabled]="cardForm.invalid">
-              Salva
-            </button>
-          </div>
+          <app-confirm-buttons [disable]="!cardForm.invalid" (save)="saveCard()" (cancel)="cancelForm()"></app-confirm-buttons>
         </form>
       </div>
     </div>

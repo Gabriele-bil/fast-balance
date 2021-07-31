@@ -169,14 +169,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
           </form>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-3">
-          <button class="btn btn-light py-2 px-4" (click)="cancelForm()">
-            Annulla
-          </button>
-          <button class="btn btn-dark py-2 px-4" (click)="saveUser()">
-            Salva
-          </button>
-        </div>
+        <app-confirm-buttons (cancel)="cancelForm()" (save)="saveUser()" [disable]="!settingsUserForm.valid"></app-confirm-buttons>
       </div>
     </div>
   `,
