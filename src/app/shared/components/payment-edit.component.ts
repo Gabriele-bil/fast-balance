@@ -70,6 +70,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
               </select>
             </label>
           </div>
+
+          <app-confirm-buttons [disable]="paymentForm.invalid"></app-confirm-buttons>
         </form>
       </div>
 

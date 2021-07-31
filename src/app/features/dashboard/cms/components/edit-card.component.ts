@@ -82,7 +82,7 @@ import { ModalService } from "@shared/services/modal.service";
             </div>
           </div>
 
-          <app-confirm-buttons [disable]="!cardForm.invalid" (save)="saveCard()" (cancel)="cancelForm()"></app-confirm-buttons>
+          <app-confirm-buttons [disable]="cardForm.invalid" (save)="saveCard()" (cancel)="cancelForm()"></app-confirm-buttons>
         </form>
       </div>
     </div>

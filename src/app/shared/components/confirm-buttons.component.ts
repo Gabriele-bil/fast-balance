@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       <button class="btn btn-light py-2 px-4" (click)="cancel.emit()">
         Annulla
       </button>
-      <button class="btn btn-dark py-2 px-4" (click)="save.emit()" [disabled]="!disable">
+      <button class="btn btn-dark py-2 px-4" (click)="save.emit()" [disabled]="disable">
         Salva
       </button>
     </div>

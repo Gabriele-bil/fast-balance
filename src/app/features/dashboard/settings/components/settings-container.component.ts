@@ -169,7 +169,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
           </form>
         </div>
 
-        <app-confirm-buttons (cancel)="cancelForm()" (save)="saveUser()" [disable]="!settingsUserForm.valid"></app-confirm-buttons>
+        <app-confirm-buttons (cancel)="cancelForm()" (save)="saveUser()" [disable]="settingsUserForm.invalid"></app-confirm-buttons>
       </div>
     </div>
   `,
