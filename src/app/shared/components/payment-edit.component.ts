@@ -3,6 +3,8 @@ import { AuthService } from "@shared/services/auth.service";
 import { Observable } from "rxjs";
 import { User } from "@shared/models/user.model";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CardService } from "@shared/services/card.service";
+import { Payment } from "@shared/models/payment.model";
 
 @Component({
   selector: 'app-payment-edit',
@@ -66,12 +68,12 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
               <select class="form-select form-control" formControlName="importance">
                 <option value="low">Bassa</option>
                 <option value="medium">Media</option>
-                <option value="heigh">Alta</option>
+                <option value="high">Alta</option>
               </select>
             </label>
           </div>
 
-          <app-confirm-buttons [disable]="paymentForm.invalid"></app-confirm-buttons>
+          <app-confirm-buttons [disable]="paymentForm.invalid" (save)="savePayment()"></app-confirm-buttons>
         </form>
       </div>
 
@@ -87,12 +89,32 @@ export class PaymentEditComponent implements OnInit {
   public currentUser: Observable<User>;
   public paymentForm: FormGroup = new FormGroup({});
 
-  constructor(private readonly authService: AuthService, private readonly fb: FormBuilder) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly fb: FormBuilder,
+    private readonly cardService: CardService
+  ) {
     this.currentUser = this.authService.me;
   }
 
   ngOnInit(): void {
     this.initForm();
+  }
+
+  public savePayment(): void {
+    const value = this.paymentForm.value;
+    const body = {
+      quantity: value.quantity,
+      currency: 'eur',
+      date: value.date,
+      note: value.note,
+      tags: value.tags?.split(','),
+      importance: value?.importance,
+      isRecurrence: value?.isRecurrence,
+      recurrenceInDays: value?.recurrenceInDays
+    };
+
+    this.cardService.addPayment(value.card, body as Payment).subscribe();
   }
 
   private initForm(): void {
