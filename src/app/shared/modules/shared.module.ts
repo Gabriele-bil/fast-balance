@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MoneyComponent } from '@shared/components/money.component';
 import { ModalComponent } from '@shared/components/modal.component';
 import { PaymentEditComponent } from "@shared/components/payment-edit.component";
+import { RouterModule } from "@angular/router";
 
 const sharedComponents = [
   LoadingButtonComponent,
@@ -13,11 +14,11 @@ const sharedComponents = [
   ModalComponent,
   PaymentEditComponent
 ];
-const sharedModules = [CommonModule, MaterialModule, ReactiveFormsModule];
+const sharedModules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
 
 @NgModule({
   declarations: [...sharedComponents],
-  imports: [...sharedModules],
+  imports: [...sharedModules ],
   exports: [...sharedComponents, ...sharedModules],
 })
 export class SharedModule {}
