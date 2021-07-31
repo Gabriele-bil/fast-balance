@@ -5,11 +5,13 @@ import { LoadingButtonComponent } from '../components/loading-button.component';
 import { CommonModule } from '@angular/common';
 import { MoneyComponent } from '@shared/components/money.component';
 import { ModalComponent } from '@shared/components/modal.component';
+import { PaymentEditComponent } from "@shared/components/payment-edit.component";
 
 const sharedComponents = [
   LoadingButtonComponent,
   MoneyComponent,
   ModalComponent,
+  PaymentEditComponent
 ];
 const sharedModules = [CommonModule, MaterialModule, ReactiveFormsModule];
 

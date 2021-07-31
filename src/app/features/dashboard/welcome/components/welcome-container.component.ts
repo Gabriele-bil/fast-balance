@@ -3,13 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-welcome-container',
   template: `
-    <div id="container" class="row">
-      <div class="col-12 col-lg-6">
-        <app-welcome-summary></app-welcome-summary>
-      </div>
-      <div class="col-12 col-lg-6">
-        <app-welcome-balances></app-welcome-balances>
-      </div>
+    <div id="container">
+        <app-payment-edit></app-payment-edit>
     </div>
   `,
   styles: [
