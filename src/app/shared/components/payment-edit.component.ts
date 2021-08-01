@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from "@shared/services/auth.service";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { User } from "@shared/models/user.model";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { CardService } from "@shared/services/card.service";
@@ -75,7 +75,8 @@ import { Payment } from "@shared/models/payment.model";
                     </label>
                   </div>
 
-                  <app-confirm-buttons [disable]="paymentForm.invalid" (save)="savePayment()"></app-confirm-buttons>
+                  <app-confirm-buttons [disable]="paymentForm.invalid" (save)="savePayment()"
+                                       [loading]="loading"></app-confirm-buttons>
                 </form>
               </div>
 
@@ -91,9 +92,11 @@ import { Payment } from "@shared/models/payment.model";
   `,
   styles: []
 })
-export class PaymentEditComponent implements OnInit {
+export class PaymentEditComponent implements OnInit, OnDestroy {
   public currentUser$: Observable<User>;
   public paymentForm: FormGroup = new FormGroup({});
+  public loading = false;
+  private subscription: Subscription | undefined;
 
   constructor(
     private readonly authService: AuthService,
@@ -108,6 +111,10 @@ export class PaymentEditComponent implements OnInit {
     this.handleRecurrence();
   }
 
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe()
+  }
+
   public handleRecurrence(): void {
     setTimeout(() => this.paymentForm.get('isRecurrence')?.value
       ? this.paymentForm.get('recurrenceInDays')?.enable()
@@ -115,6 +122,7 @@ export class PaymentEditComponent implements OnInit {
   }
 
   public savePayment(): void {
+    this.loading = true;
     const value = this.paymentForm.value;
     const body = {
       quantity: value.quantity,
@@ -124,10 +132,13 @@ export class PaymentEditComponent implements OnInit {
       tags: value.tags?.split(','),
       importance: value?.importance,
       isRecurrence: value?.isRecurrence,
-      recurrenceInDays: value?.recurrenceInDays
+      recurrenceInDays: value.recurrenceInDays ? value.recurrenceInDays : 0
     };
 
-    this.cardService.addPayment(value.card, body as Payment).subscribe();
+    this.subscription = this.cardService.addPayment(value.card, body as Payment).subscribe(
+      () => this.loading = false,
+      () => this.loading = false
+    );
   }
 
   private initForm(): void {
@@ -142,5 +153,4 @@ export class PaymentEditComponent implements OnInit {
       importance: ['low']
     })
   }
-
 }

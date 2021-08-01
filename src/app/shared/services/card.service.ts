@@ -4,7 +4,7 @@ import { Card } from "@shared/models/card.model";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Payment } from "@shared/models/payment.model";
 import { exhaustMap, first } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +19,13 @@ export class CardService extends GenericService<Card> {
     return this.getById(cardId).pipe(
       first(),
       exhaustMap(card => {
-        // @ts-ignore
-        const payments = card.payments ? [...card.payments] : [];
-        payments.push(payment);
-        return this.update(cardId, { payments } as Card);
+        if (card) {
+          const payments = card.payments ? [...card.payments] : [];
+          payments.push(payment);
+          const balance = card.balance + payment.quantity;
+          return this.update(cardId, { balance, payments } as Card);
+        }
+        return of(undefined);
       })
     )
   }

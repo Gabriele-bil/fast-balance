@@ -7,16 +7,19 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       <button class="btn btn-light py-2 px-4" (click)="cancel.emit()">
         Annulla
       </button>
-      <button class="btn btn-dark py-2 px-4" (click)="save.emit()" [disabled]="disable">
-        Salva
-      </button>
+      <app-loading-button [disabled]="disable"
+                          [loading]="loading"
+                          (clicked)="save.emit()"
+                          [text]="'Salva'"
+                          [classes]="['btn', 'btn-dark', 'py-2', 'px-4']">
+      </app-loading-button>
     </div>
   `,
-  styles: [
-  ]
+  styles: []
 })
 export class ConfirmButtonsComponent {
-  @Input() disable: boolean = false;
+  @Input() disable = false;
+  @Input() loading = false;
   @Output() cancel = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
 }
