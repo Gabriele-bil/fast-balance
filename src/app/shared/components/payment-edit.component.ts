@@ -45,13 +45,13 @@ import { Payment } from "@shared/models/payment.model";
             <div class="col-12 col-lg-3">
               <div class="form-check d-flex align-items-center m-0">
                 <label class="form-check-label ps-2">
-                  <input class="form-check-input" type="checkbox" formControlName="isRecurrence">
+                  <input class="form-check-input" type="checkbox" formControlName="isRecurrence" (click)="handleRecurrence()">
                   <span>Movimento ricorrente</span>
                 </label>
               </div>
             </div>
 
-            <label class="col-12 col-lg-5">
+            <label class="col-12 col-lg-5 mt-3 mt-lg-0">
               <span>Ricorrenza in giorni</span>
               <input type="number" class="form-control" formControlName="recurrenceInDays">
             </label>
@@ -99,6 +99,13 @@ export class PaymentEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.handleRecurrence();
+  }
+
+  public handleRecurrence(): void {
+    setTimeout(() => this.paymentForm.get('isRecurrence')?.value
+      ? this.paymentForm.get('recurrenceInDays')?.enable()
+      : this.paymentForm.get('recurrenceInDays')?.disable(), 0);
   }
 
   public savePayment(): void {
