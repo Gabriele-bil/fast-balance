@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Card } from "@shared/models/card.model";
-import { Payment } from "@shared/models/payment.model";
+import { Importance, Payment } from "@shared/models/payment.model";
 import { WalletImg } from "@shared/models/enums";
+import { Summary } from "@shared/models/summary.model";
+import moment from 'moment';
 
 @Component({
   selector: 'app-welcome-summary',
@@ -28,7 +30,8 @@ import { WalletImg } from "@shared/models/enums";
 
           <div class="col-12 col-md-6">
             <h4>Ultimi movimenti</h4>
-            <div class="payment d-flex justify-content-between align-items-center mb-1" *ngFor="let payment of payments" [title]="payment.cardName">
+            <div class="payment d-flex justify-content-between align-items-center mb-1" *ngFor="let payment of payments"
+                 [title]="payment.cardName">
               <div class="d-flex">
                 <img [src]="payment.cardIcon" alt="icon url">
                 <h5 class="px-3">{{ payment.payment.date | date }}</h5>
@@ -39,7 +42,7 @@ import { WalletImg } from "@shared/models/enums";
           </div>
         </div>
 
-        <app-welcome-balances [currentDay]="currentDay"></app-welcome-balances>
+        <app-welcome-balances [currentDay]="currentDay" [summary]="summary"></app-welcome-balances>
       </div>
     </div>
   `,
@@ -69,18 +72,42 @@ export class WelcomeSummaryComponent implements OnInit {
 
   public payments: { payment: Payment, cardIcon: WalletImg, cardName: string }[] = [];
   public currentDay = new Date();
+  public summary: Summary = {
+    expenses: 0,
+    income: 0,
+    net: 0,
+    unnecessaryExpenses: 0
+  };
 
   ngOnInit(): void {
-    this.cards.forEach(card => card.payments?.forEach(payment => this.payments.push({
-      payment,
-      cardIcon: card.iconUrl,
-      cardName: card.name
-    })))
+    this.cards.forEach(card =>
+      card.payments?.forEach(payment => {
+        this.payments.push({
+          payment,
+          cardIcon: card.iconUrl,
+          cardName: card.name
+        })
+        this.setSummary(payment);
+        this.summary.net = this.summary.income - this.summary.expenses;
+      })
+    )
   }
 
   get totalBalance(): number {
     return this.cards
       ? this.cards?.map(card => card.balance).reduce((acc, curr) => acc + curr, 0)
       : 0
+  }
+
+  public setSummary(payment: Payment): void {
+    if (moment(payment.date).month() === moment().month()) {
+      payment.quantity < 0
+        ? this.summary.expenses -= payment.quantity
+        : this.summary.income += payment.quantity;
+
+      if (payment.quantity < 0 && payment.importance === Importance.LOW) {
+        this.summary.unnecessaryExpenses -= payment.quantity
+      }
+    }
   }
 }

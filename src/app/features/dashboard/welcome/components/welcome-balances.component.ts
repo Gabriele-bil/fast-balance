@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Summary } from "@shared/models/summary.model";
 
 @Component({
   selector: 'app-welcome-balances',
@@ -16,28 +17,22 @@ import { Component, Input } from '@angular/core';
           <h4>Netto</h4>
         </div>
         <div class="col">
-          <h4>Differenza mese precedente</h4>
-        </div>
-        <div class="col">
           <h4>Spese non necessarie</h4>
         </div>
       </div>
 
       <div class="row">
         <div class="col">
-          <app-money [quantity]="-23"></app-money>
+          <app-money [quantity]="-summary.expenses"></app-money>
         </div>
         <div class="col">
-          <app-money [quantity]="223"></app-money>
+          <app-money [quantity]="summary.income"></app-money>
         </div>
         <div class="col">
-          <app-money [quantity]="200"></app-money>
+          <app-money [quantity]="summary.net"></app-money>
         </div>
         <div class="col">
-          <app-money [quantity]="200"></app-money>
-        </div>
-        <div class="col">
-          <app-money [quantity]="-50"></app-money>
+          <app-money [quantity]="-summary.unnecessaryExpenses"></app-money>
         </div>
       </div>
     </div>
@@ -52,4 +47,10 @@ import { Component, Input } from '@angular/core';
 })
 export class WelcomeBalancesComponent {
   @Input() currentDay: Date = new Date();
+  @Input() summary: Summary = {
+    expenses: 0,
+    income: 0,
+    net: 0,
+    unnecessaryExpenses: 0
+  };
 }
