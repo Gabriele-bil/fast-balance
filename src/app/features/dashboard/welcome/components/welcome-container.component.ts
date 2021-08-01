@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MeService } from "@shared/services/me.service";
+import { Observable } from "rxjs";
+import { Card } from "@shared/models/card.model";
 
 @Component({
   selector: 'app-welcome-container',
@@ -7,8 +10,8 @@ import { Component } from '@angular/core';
       <div class="mb-3">
         <app-payment-edit></app-payment-edit>
       </div>
-      <div>
-        <app-welcome-summary></app-welcome-summary>
+      <div *ngIf="cards$ | async as cards">
+        <app-welcome-summary [cards]="cards"></app-welcome-summary>
       </div>
     </div>
   `,
@@ -20,5 +23,14 @@ import { Component } from '@angular/core';
       }
     `]
 })
-export class WelcomeContainerComponent {
+export class WelcomeContainerComponent implements OnInit {
+  public cards$: Observable<Card[]> | undefined;
+
+  constructor(private readonly meService: MeService) {
+  }
+
+  ngOnInit(): void {
+    this.cards$ = this.meService.getCards();
+  }
+
 }

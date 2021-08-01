@@ -11,6 +11,7 @@ export interface ICard {
   balance: number;
   limitBudget: boolean;
   monthlyBudget: number;
+  userId: string;
   payments: IPayment[];
 }
 
@@ -25,7 +26,8 @@ export class Card implements ICard {
     public balance = 0,
     public monthlyBudget = 0,
     public limitBudget = false,
-    public payments: Payment[] = [],
+    public userId = '',
+    public payments: Payment[] = []
   ) {
   }
 
@@ -42,6 +44,7 @@ export class Card implements ICard {
       card.balance,
       card.monthlyBudget,
       card.limitBudget,
+      card.userId,
       payments
     );
   }
