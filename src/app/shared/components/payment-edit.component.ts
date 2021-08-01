@@ -21,12 +21,12 @@ import { Payment } from "@shared/models/payment.model";
               <input type="number" class="form-control" formControlName="quantity">
             </label>
 
-            <label class="col-12 col-lg-6 col-xl-4">
+            <label class="col-12 col-lg-6 mt-4 mt-lg-0 col-xl-4">
               <span>Data</span>
               <input type="date" class="form-control" formControlName="date">
             </label>
 
-            <label class="col-12 col-xl-4">
+            <label class="col-12 col-xl-4 mt-4 mt-xl-0">
               <span>Carta</span>
               <select class="form-select form-control" id="autoSizingSelect" formControlName="card">
                 <option *ngFor="let card of currentUser.cards" [value]="card.id">{{ card.name }}</option>
@@ -63,7 +63,7 @@ import { Payment } from "@shared/models/payment.model";
               <input type="text" class="form-control" formControlName="tags">
             </label>
 
-            <label class="col-12 col-lg-4">
+            <label class="col-12 col-lg-4 mt-4 mt-lg-0">
               <span>Importanza</span>
               <select class="form-select form-control" formControlName="importance">
                 <option value="low">Bassa</option>
