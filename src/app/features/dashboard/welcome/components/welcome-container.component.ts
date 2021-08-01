@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-welcome-container',
   template: `
-    <div id="container">
+    <div id="container" class="p-3 p-md-4">
         <app-payment-edit></app-payment-edit>
     </div>
   `,
@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
     //language=scss
     `
       #container {
-        width: calc(100vw - 300px);
+        width: calc(100vw - 80px);
       }
     `]
 })
