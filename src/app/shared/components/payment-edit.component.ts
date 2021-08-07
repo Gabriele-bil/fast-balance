@@ -1,19 +1,17 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AuthService } from "@shared/services/auth.service";
-import { Observable } from "rxjs";
-import { User } from "@shared/models/user.model";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Payment } from "@shared/models/payment.model";
+import { Card } from "@shared/models/card.model";
 
 @Component({
   selector: 'app-payment-edit',
   template: `
-    <div *ngIf="currentUser$ | async as currentUser">
-      <ngb-accordion *ngIf="currentUser.cards.length">
+    <div>
+      <ngb-accordion>
         <ngb-panel title="Aggiungi nuovo movimento">
           <ng-template ngbPanelContent>
             <div class="card">
-              <div class="card-body" *ngIf="currentUser.cards.length">
+              <div class="card-body" *ngIf="cards.length">
                 <form [formGroup]="paymentForm">
                   <div class="row mb-4">
                     <label class="col-12 col-lg-6 col-xl-4">
@@ -29,7 +27,7 @@ import { Payment } from "@shared/models/payment.model";
                     <label class="col-12 col-xl-4 mt-4 mt-xl-0">
                       <span>Carta</span>
                       <select class="form-select form-control" id="autoSizingSelect" formControlName="card">
-                        <option *ngFor="let card of currentUser.cards" [value]="card.id">{{ card.name }}</option>
+                        <option *ngFor="let card of cards" [value]="card.id">{{ card.name }}</option>
                       </select>
                     </label>
                   </div>
@@ -78,7 +76,7 @@ import { Payment } from "@shared/models/payment.model";
                 </form>
               </div>
 
-              <div class="card-body" *ngIf="!currentUser.cards.length">
+              <div class="card-body" *ngIf="!cards.length">
                 <h3>Devi aggiungere prima una carta</h3>
                 <a routerLink="/cms/cards/add">Vai alla sezione per aggiungere una carta</a>
               </div>
@@ -91,16 +89,12 @@ import { Payment } from "@shared/models/payment.model";
   styles: []
 })
 export class PaymentEditComponent implements OnInit {
+  @Input() cards: Card[] = [];
   @Output() save = new EventEmitter<{ card: string, payment: Payment }>();
 
-  public currentUser$: Observable<User>;
   public paymentForm: FormGroup = new FormGroup({});
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly fb: FormBuilder,
-  ) {
-    this.currentUser$ = this.authService.me;
+  constructor(private readonly fb: FormBuilder) {
   }
 
   ngOnInit(): void {

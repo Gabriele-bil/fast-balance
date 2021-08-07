@@ -174,6 +174,7 @@ export class EditCardComponent implements OnInit {
         balance: this.cardForm.value.balance,
         monthlyBudget: this.cardForm.value.monthlyBudget ? this.cardForm.value.monthlyBudget : '',
         limitBudget: this.cardForm.value.limitBudget,
+        userId: this.currentUser.id
       } as Card;
 
       this.cardForm.reset(this.cardForm.value);
