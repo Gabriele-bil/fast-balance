@@ -14,9 +14,8 @@ import { User } from "@shared/models/user.model";
       </div>
       <div class="d-flex flex-column">
         <h3>Carte registrate: {{ user.cards.length }}</h3>
-        <h3>Movimenti effettuati: <app-money [currency]="'eur'" [quantity]="movementsMade"></app-money></h3>
         <h3>Data di creazione dell'account: {{ user.createdDate | date:('dd-MM-YYYY') }}</h3>
-        <button class="btn btn-secondary align-self-center mt-3">Aggiungi nuova carta</button>
+        <button class="btn btn-secondary align-self-center mt-3" routerLink="/dashboard/cms/cards/add">Aggiungi nuova carta</button>
       </div>
     </div>
   `,
@@ -39,8 +38,4 @@ export class SettingsSummaryComponent {
   @Input() edit: boolean = false;
   @Input() user: User = {} as User;
   @Output() uploadFile = new EventEmitter();
-
-  get movementsMade(): number {
-    return this.user.cards.reduce((a, b) => a + b.balance, 0);
-  }
 }

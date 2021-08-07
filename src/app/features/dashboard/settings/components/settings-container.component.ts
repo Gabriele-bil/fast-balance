@@ -180,6 +180,11 @@ import { SnackbarService } from '@shared/services/snackbar.service';
         width: calc(100vw - 80px);
         min-height: 100vh;
 
+        @media (max-width: 768px) {
+          width: 100vw;
+          margin-bottom: 50px;
+        }
+
         textarea {
           min-height: 80px;
         }
