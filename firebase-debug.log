@@ -1,0 +1,122 @@
+[debug] [2021-08-07T17:01:33.513Z] ----------------------------------------------------------------------
+[debug] [2021-08-07T17:01:33.515Z] Command:       C:\Program Files\nodejs\node.exe D:\Webdesign\Angular\fast-balance\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2021-08-07T17:01:33.516Z] CLI Version:   9.14.0
+[debug] [2021-08-07T17:01:33.516Z] Platform:      win32
+[debug] [2021-08-07T17:01:33.516Z] Node Version:  v14.17.1
+[debug] [2021-08-07T17:01:33.517Z] Time:          Sat Aug 07 2021 19:01:33 GMT+0200 (Ora legale dell’Europa centrale)
+[debug] [2021-08-07T17:01:33.517Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-08-07T17:01:33.523Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-08-07T17:01:33.523Z] > authorizing via signed-in user (gabriele.bilello1@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Webdesign\Angular\fast-balance
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  .firebaserc already has a default project, using fast-balance. 
+[debug] [2021-08-07T17:01:41.612Z] > refreshing access token with scopes: []
+[debug] [2021-08-07T17:01:41.612Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-08-07T17:01:41.821Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","date":"Sat, 07 Aug 2021 17:01:42 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:01:41.843Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fast-balance [none]
+[debug] [2021-08-07T17:01:42.159Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fast-balance 200
+[debug] [2021-08-07T17:01:42.160Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fast-balance {"projectId":"fast-balance","projectNumber":"990934654137","displayName":"Fast-Balance","name":"projects/fast-balance","resources":{"hostingSite":"fast-balance","realtimeDatabaseInstance":"fast-balance-default-rtdb","storageBucket":"fast-balance.appspot.com","locationId":"europe-west"},"state":"ACTIVE"}
+[info] 
+=== Database Setup
+[info] i  database: ensuring required API firebasedatabase.googleapis.com is enabled... 
+[debug] [2021-08-07T17:01:42.162Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-08-07T17:01:42.162Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-08-07T17:01:42.374Z] <<< HTTP RESPONSE 200 {"date":"Sat, 07 Aug 2021 17:01:42 GMT","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:01:42.394Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/fast-balance/services/firebasedatabase.googleapis.com  
+ 
+[debug] [2021-08-07T17:01:43.375Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:01:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] +  database: required API firebasedatabase.googleapis.com is enabled 
+[info] 
+[debug] [2021-08-07T17:01:43.380Z] > refreshing access token with scopes: []
+[debug] [2021-08-07T17:01:43.381Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-08-07T17:01:43.557Z] <<< HTTP RESPONSE 200 {"date":"Sat, 07 Aug 2021 17:01:43 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:01:43.577Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fast-balance [none]
+[debug] [2021-08-07T17:01:43.819Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fast-balance 200
+[debug] [2021-08-07T17:01:43.819Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fast-balance {"projectId":"fast-balance","projectNumber":"990934654137","displayName":"Fast-Balance","name":"projects/fast-balance","resources":{"hostingSite":"fast-balance","realtimeDatabaseInstance":"fast-balance-default-rtdb","storageBucket":"fast-balance.appspot.com","locationId":"europe-west"},"state":"ACTIVE"}
+[debug] [2021-08-07T17:01:43.821Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-08-07T17:01:43.821Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-08-07T17:01:44.004Z] <<< HTTP RESPONSE 200 {"date":"Sat, 07 Aug 2021 17:01:44 GMT","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:01:44.021Z] >>> HTTP REQUEST GET https://firebasedatabase.googleapis.com/v1beta/projects/fast-balance/locations/-/instances/fast-balance-default-rtdb  
+ 
+[debug] [2021-08-07T17:01:44.425Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:01:44 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] Firebase Realtime Database Security Rules allow you to define how your data should be
+[info] structured and when your data can be read from and written to.
+[info] 
+[debug] [2021-08-07T17:01:50.796Z] >>> HTTP REQUEST GET https://fast-balance-default-rtdb.europe-west1.firebasedatabase.app/.settings/rules.json  
+ 
+[debug] [2021-08-07T17:01:51.020Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Sat, 07 Aug 2021 17:01:51 GMT","content-type":"application/json; charset=utf-8","content-length":"111","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}
+[info] +  Database Rules for fast-balance-default-rtdb have been written to database.rules.json. 
+[info] Future modifications to database.rules.json will update Realtime Database Security Rules when you run
+[info] firebase deploy.
+[info] 
+=== Firestore Setup
+[debug] [2021-08-07T17:01:51.026Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/fast-balance/services/firestore.googleapis.com  
+ 
+[debug] [2021-08-07T17:01:52.041Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:01:52 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:01:52.043Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/fast-balance  
+ 
+[debug] [2021-08-07T17:01:52.318Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:01:52 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:01:52.319Z] database_type: CLOUD_FIRESTORE
+[debug] [2021-08-07T17:01:52.321Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-08-07T17:01:52.321Z] > authorizing via signed-in user (gabriele.bilello1@gmail.com)
+[debug] [2021-08-07T17:01:52.321Z] [iam] checking project fast-balance for permissions ["firebase.projects.get"]
+[debug] [2021-08-07T17:01:52.322Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/fast-balance:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-08-07T17:01:53.095Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:01:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=643","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] Firestore Security Rules allow you to define how and when to allow
+[info] requests. You can keep these rules in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2021-08-07T17:01:56.783Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/fast-balance/releases?pageSize=10&pageToken=  
+ 
+[debug] [2021-08-07T17:01:57.568Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:01:57 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:01:57.571Z] Found ruleset: projects/fast-balance/rulesets/37ba98dc-a6b5-4f41-aeab-9a308153dbdb
+[debug] [2021-08-07T17:01:57.572Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/fast-balance/rulesets/37ba98dc-a6b5-4f41-aeab-9a308153dbdb  
+ 
+[debug] [2021-08-07T17:01:58.344Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:01:58 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] Firestore indexes allow you to perform complex queries while
+[info] maintaining performance that scales with the size of the result
+[info] set. You can keep index definitions in your project directory
+[info] and publish them with firebase deploy.
+[info] 
+[debug] [2021-08-07T17:02:02.661Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1/projects/fast-balance/databases/(default)/collectionGroups/-/indexes  
+ 
+[debug] [2021-08-07T17:02:02.662Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1/projects/fast-balance/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false  
+ 
+[debug] [2021-08-07T17:02:02.903Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:02:03 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-07T17:02:02.917Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 07 Aug 2021 17:02:03 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
