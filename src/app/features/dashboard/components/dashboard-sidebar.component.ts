@@ -7,7 +7,7 @@ import { Subscription } from "rxjs";
   template: `
     <div
       id="container"
-      class="d-flex flex-column justify-content-between align-items-center py-3"
+      class="d-none d-md-flex flex-column justify-content-between align-items-center py-3"
     >
       <div class="d-flex flex-column align-items-center">
         <a routerLink="/dashboard/welcome" class="p-1 pt-3" routerLinkActive="active">
@@ -35,6 +35,38 @@ import { Subscription } from "rxjs";
         </button>
       </div>
     </div>
+
+    <div class="mobile-navbar p-1 d-md-none">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <div class="mx-3">
+            <a routerLink="/dashboard/welcome">
+              <img
+                src="/assets/images/brand/icon.png"
+                alt="Brand icon"
+              />
+            </a>
+          </div>
+
+          <a routerLink="/dashboard/cms/cards">
+            <img
+              src="/assets/images/icons/black-wallet.png"
+              alt="Le tue carte"
+            />
+          </a>
+        </div>
+
+        <div class="profile-container d-flex align-items-center">
+          <a routerLink="/dashboard/settings">
+            <img src="/assets/images/user-icon.png" alt="User image icon"
+            /></a>
+
+          <button class="btn" (click)="logout()">
+            <img src="/assets/images/icons/logout.png" alt="logout"/>
+          </button>
+        </div>
+      </div>
+    </div>
   `,
   styles: [
     // language=scss
@@ -47,9 +79,23 @@ import { Subscription } from "rxjs";
         img {
           width: 2.5rem;
         }
+      }
 
-        .active {
-          border-bottom: 1px solid #111112;
+      .active {
+        border-bottom: 1px solid #111112;
+      }
+
+      .mobile-navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-color: #fafafa;
+        width: 100vw;
+        height: 50px;
+        z-index: 10;
+
+        img {
+          width: 2rem;
         }
       }
     `,

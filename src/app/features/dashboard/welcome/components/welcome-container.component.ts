@@ -23,6 +23,11 @@ import { SpinnerService } from "@shared/services/spinner.service";
     `
       #container {
         width: calc(100vw - 80px);
+
+        @media (max-width: 768px) {
+          width: 100vw;
+          margin-bottom: 50px;
+        }
       }
     `]
 })
@@ -38,7 +43,7 @@ export class WelcomeContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   public savePayment(event: { card: string, payment: Payment }): void {
