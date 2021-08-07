@@ -6,7 +6,7 @@ import { Color, WalletImg } from "@shared/models/enums";
   template: `
     <div class="row">
       <h2>Media</h2>
-      <div class="col-4">
+      <div class="col-12 col-sm-4 d-flex flex-column align-items-center">
         <label class="text-center cursor-pointer">
           <img [src]="backgroundUrl" alt="card background" class="img-fluid"/>
           <h2>Inserisci immagine di sfondo</h2>
@@ -19,7 +19,7 @@ import { Color, WalletImg } from "@shared/models/enums";
       </div>
 
       <div
-        class="col-4 position-relative d-flex flex-column align-items-center"
+        class="col-12 col-sm-4 position-relative d-flex flex-column align-items-center my-4 my-sm-0"
       >
         <h2>Scegli un colore</h2>
         <div
@@ -40,7 +40,7 @@ import { Color, WalletImg } from "@shared/models/enums";
       </div>
 
       <div
-        class="col-4 position-relative d-flex flex-column align-items-center"
+        class="col-12 col-sm-4 position-relative d-flex flex-column align-items-center"
       >
         <h2>Scegli un'icona</h2>
         <img [src]="selectedPicture" alt="selected icon" class="icon cursor-pointer"

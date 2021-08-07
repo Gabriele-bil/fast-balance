@@ -10,40 +10,33 @@ import { User } from "@shared/models/user.model";
   selector: 'app-cards',
   template: `
     <div id="container" class="d-flex justify-content-center p-3 p-md-4">
-      <div class="background-white w-100 p-3">
-        <h1 class="mt-3">Le tue carte</h1>
+      <div class="background-white w-100 p-1">
+        <div class="bg-dark text-white p-3">
+          <h2 class="mt-3">Le tue carte</h2>
+          <div class="row">
+            <div class="col-1 d-none d-md-flex"></div>
+            <div class="col">Nome</div>
+            <div class="col">Credito</div>
+            <div class="col">Movimenti effettuati</div>
+            <div class="col"></div>
+            <div class="col-2 d-none d-md-flex"></div>
+          </div>
 
-        <table class="table table-dark table-hover mt-5">
-          <thead>
-          <tr class="text-center">
-            <td></td>
-            <td>Nome</td>
-            <td>Credito</td>
-            <td>Budget limite</td>
-            <td>Movimenti effettuati</td>
-            <td></td>
-            <td></td>
-          </tr>
-          </thead>
-
-          <tbody>
-          <tr *ngFor="let card of cards" class="text-center">
-            <td><img [src]="card.iconUrl" alt="card icon" class="img-fluid"></td>
-            <td>{{ card.name }}</td>
-            <td>{{ card.balance }}</td>
-            <td>{{ card.monthlyBudget }}</td>
-            <td>{{ card.payments?.length ? card.payments?.length : 0 }}</td>
-            <td>
+          <div class="row card-container my-3 align-items-center cursor-pointer" *ngFor="let card of cards" >
+            <div class="col-1 d-none d-md-flex"><img [src]="card.iconUrl" alt="card icon" class="img-fluid"></div>
+            <div class="col">{{ card.name }}</div>
+            <div class="col">{{ card.balance }}</div>
+            <div class="col">{{ card.payments?.length ? card.payments?.length : 0 }}</div>
+            <div class="col">
               <button class="btn btn-primary" [routerLink]="['edit/', card.id]">Dettagli</button>
-            </td>
-            <td>
+            </div>
+            <div class="col-2 d-none d-md-flex">
               <button class="btn btn-danger" (click)="deleteCard(card.id)">Elimina</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+            </div>
+          </div>
+        </div>
 
-        <button class="btn btn-primary position-fixed">
+        <button class="btn btn-primary position-fixed my-2">
           <a routerLink="add" class="text-white text-decoration-none">
             Aggiungi nuova carta
           </a>
@@ -56,15 +49,27 @@ import { User } from "@shared/models/user.model";
     `
       #container {
         width: calc(100vw - 80px);
-        min-height: 100vh;
+
+        @media (max-width: 768px) {
+          width: 100vw;
+          margin-bottom: 50px;
+        }
 
         h1 {
           font-size: 48px;
         }
 
+        .card-container {
+          border-bottom: 1px solid #fafafa;
+        }
+
         button {
           bottom: 3rem;
           right: 3rem;
+
+          @media (max-width: 768px) {
+            position: static !important;
+          }
         }
 
         img {
@@ -92,7 +97,7 @@ export class CardsComponent implements OnInit, OnDestroy {
     this.authService.me.subscribe(user => this.currentUser = user);
     this.getCardsSubscription = this.cardService.getAll().subscribe(
       cards => {
-        this.cards = cards ? cards.sort((a, b) => this.sortCards(a, b)) : [];
+        this.cards = cards ? cards.sort((a, b) => a.name > b.name ? 1 : -1) : [];
         this.spinnerService.showSpinner$.next(false);
       },
       () => this.spinnerService.showSpinner$.next(false))
@@ -113,9 +118,5 @@ export class CardsComponent implements OnInit, OnDestroy {
       },
       () => this.spinnerService.showSpinner$.next(false)
     )
-  }
-
-  private sortCards(a: Card, b: Card): number {
-    return a.name > b.name ? 1 : - 1;
   }
 }

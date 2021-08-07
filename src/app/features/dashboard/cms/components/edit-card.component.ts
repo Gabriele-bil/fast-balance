@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '@shared/services/file.service';
 import { SpinnerService } from '@shared/services/spinner.service';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -14,7 +14,7 @@ import { ModalService } from "@shared/services/modal.service";
   selector: 'app-edit-card',
   template: `
     <div id="container" class="d-flex justify-content-center p-3 p-md-4">
-      <div class="background-white w-100 p-3">
+      <div class="background-white w-100 h-100 p-3">
         <h1>{{ cardId ? 'Modifica Carta' : 'Aggiungi Carta'}}</h1>
         <form class="d-flex flex-column justify-content-between" [formGroup]="cardForm">
           <div class="row">
@@ -28,14 +28,12 @@ import { ModalService } from "@shared/services/modal.service";
               />
             </div>
 
-            <div class="row my-0 my-md-5">
-              <div class="col">
+            <div class="col-12 my-3">
               <textarea
                 class="form-control"
                 placeholder="Descrizione"
                 formControlName="description"
               ></textarea>
-              </div>
             </div>
           </div>
 
@@ -60,7 +58,7 @@ import { ModalService } from "@shared/services/modal.service";
               />
             </div>
 
-            <div class="col-12 col-sm-4 d-flex align-items-center justify-content-center">
+            <div class="col-12 col-sm-4 d-flex justify-content-sm-center my-3 my-sm-0">
               <label class="d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -82,7 +80,12 @@ import { ModalService } from "@shared/services/modal.service";
             </div>
           </div>
 
-          <app-confirm-buttons [disable]="cardForm.invalid" (save)="saveCard()" (cancel)="cancelForm()"></app-confirm-buttons>
+          <div class="my-4" *ngIf="cardId">
+            <button class="btn btn-danger" (click)="deleteCard()">Cancella Carta</button>
+          </div>
+
+          <app-confirm-buttons [disable]="cardForm.invalid" (save)="saveCard()"
+                               (cancel)="cancelForm()"></app-confirm-buttons>
         </form>
       </div>
     </div>
@@ -92,7 +95,11 @@ import { ModalService } from "@shared/services/modal.service";
     `
       #container {
         width: calc(100vw - 80px);
-        min-height: 100vh;
+
+        @media (max-width: 768px) {
+          width: 100vw;
+          margin-bottom: 50px;
+        }
 
         form {
           height: 90%;
@@ -123,7 +130,8 @@ export class EditCardComponent implements OnInit {
     private readonly fileService: FileService,
     private readonly cardService: CardService,
     private readonly authService: AuthService,
-    private readonly modalService: ModalService
+    private readonly modalService: ModalService,
+    private readonly router: Router
   ) {
   }
 
@@ -206,7 +214,7 @@ export class EditCardComponent implements OnInit {
       card => {
         if (card) {
           const index = this.currentUser.cards.findIndex(c => c.id === this.cardId);
-          const cards =  this.currentUser.cards;
+          const cards = this.currentUser.cards;
           cards.splice(index, 1, card);
           // @ts-ignore
           this.authService.update(this.currentUser.id, { cards }).subscribe();
@@ -228,6 +236,20 @@ export class EditCardComponent implements OnInit {
         this.spinnerService.showSpinner$.next(false)
       },
       () => this.spinnerService.showSpinner$.next(false),
+    )
+  }
+
+  public deleteCard(): void {
+    this.spinnerService.showSpinner$.next(true);
+    this.cardService.delete(this.cardId).subscribe(
+      () => {
+        const cards = this.currentUser.cards.filter(card => card.id !== this.cardId);
+        // @ts-ignore
+        this.authService.update(this.currentUser.id, { cards }).subscribe();
+        this.spinnerService.showSpinner$.next(false);
+        this.router.navigateByUrl('/dashboard/cms/cards');
+      },
+      () => this.spinnerService.showSpinner$.next(false)
     )
   }
 }
