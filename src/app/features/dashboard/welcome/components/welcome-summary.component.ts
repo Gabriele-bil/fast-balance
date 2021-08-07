@@ -90,7 +90,9 @@ export class WelcomeSummaryComponent implements OnInit {
         this.setSummary(payment);
         this.summary.net = this.summary.income - this.summary.expenses;
       })
-    )
+    );
+    this.payments.sort((p1, p2) => new Date(p2.payment.date).getTime() - new Date(p1.payment.date).getTime()).slice(0, 4);
+    this.payments = this.payments.slice(0, 5);
   }
 
   get totalBalance(): number {

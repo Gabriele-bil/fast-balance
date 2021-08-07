@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Card } from "@shared/models/card.model";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { switchMap, take } from "rxjs/operators";
+import { switchMap } from "rxjs/operators";
 import { AuthService } from "@shared/services/auth.service";
 
 @Injectable({
@@ -15,8 +15,7 @@ export class MeService {
 
   public getCards(): Observable<Card[]> {
     return this.authService.me.pipe(
-      take(1),
-      switchMap(currentUser => this.firestore.collection<Card>('cards', ref => ref.where('userId', '==', currentUser.id)).valueChanges())
-    )
+      switchMap(currentUser =>
+        this.firestore.collection<Card>('cards', ref => ref.where('userId', '==', currentUser.id)).valueChanges()))
   }
 }
