@@ -4,13 +4,13 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-welcome-payment-list-container',
   template: `
     <p>
-      welcome-payment-list-container works!
+      list-container works!
     </p>
   `,
   styles: [
   ]
 })
-export class WelcomePaymentListContainerComponent implements OnInit {
+export class ListContainerComponent implements OnInit {
 
   constructor() { }
 
