@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-money',
   template: `
     <span [ngClass]="quantity > 0 ? 'text-success' : 'text-danger'">
-      {{ quantity }}
+      {{ quantity.toFixed(2) }}
       <span *ngIf="currency === 'eur'">€</span>
       <span *ngIf="currency === 'usd'">$</span>
     </span>

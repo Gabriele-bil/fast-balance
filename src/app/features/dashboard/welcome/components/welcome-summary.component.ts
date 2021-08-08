@@ -30,12 +30,12 @@ import moment from 'moment';
 
           <div class="col-12 col-md-6">
             <h4>Ultimi movimenti</h4>
-            <div class="payment d-flex justify-content-between align-items-center mb-1" *ngFor="let payment of payments"
+            <div class="payment d-flex justify-content-between align-items-center mb-3" *ngFor="let payment of payments"
                  [title]="payment.cardName">
               <div class="d-flex">
                 <img [src]="payment.cardIcon" alt="icon url">
-                <h5 class="px-3">{{ payment.payment.date | date }}</h5>
-                <h5>{{ payment.payment.note }}</h5>
+                <h5 class="m-0 px-3">{{ payment.payment.date | date }}</h5>
+                <h5  class="m-0">{{ payment.payment.note }}</h5>
               </div>
               <app-money [quantity]="payment.payment.quantity"></app-money>
             </div>

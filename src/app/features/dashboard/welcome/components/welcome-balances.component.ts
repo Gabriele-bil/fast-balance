@@ -5,7 +5,7 @@ import { Summary } from "@shared/models/summary.model";
   selector: 'app-welcome-balances',
   template: `
     <div id="container">
-      <h3 class="mt-3">Bilancio mese {{ currentDay | date: 'MMMM' }}</h3>
+      <h3 class="mt-3">Bilancio mese {{ currentDay | date: 'MMMM' | titlecase }}</h3>
       <div class="row">
         <div class="col">
           <h4>Spese</h4>

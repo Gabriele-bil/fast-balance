@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,10 @@ import { environment } from '@environments//environment.prod';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { SpinnerComponent } from '@shared/components/spinner.component';
 import { SharedModule } from '@shared/modules/shared.module';
+import localeIt from '@angular/common/locales/it';
+import { registerLocaleData } from "@angular/common";
+
+registerLocaleData(localeIt);
 
 @NgModule({
   declarations: [AppComponent, SpinnerComponent],
@@ -24,7 +28,9 @@ import { SharedModule } from '@shared/modules/shared.module';
     AngularFireStorageModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: "it-IT" }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
