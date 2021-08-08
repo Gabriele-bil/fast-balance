@@ -29,7 +29,10 @@ import moment from 'moment';
           </div>
 
           <div class="col-12 col-md-6">
-            <h4>Ultimi movimenti</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="mb-0">Ultimi movimenti</h4>
+              <a routerLink="payment-list">Vai alla lista completa</a>
+            </div>
             <div class="payment d-flex justify-content-between align-items-center mb-3" *ngFor="let payment of payments"
                  [title]="payment.cardName">
               <div class="d-flex">
