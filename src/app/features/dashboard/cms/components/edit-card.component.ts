@@ -230,7 +230,7 @@ export class EditCardComponent implements OnInit {
     this.cardService.create(body).subscribe(
       (card) => {
         if (card) {
-          const cards = this.currentUser.cards.length ? [...this.currentUser.cards, { ...card }] : [{ ...card }];
+          const cards = this.currentUser?.cards?.length ? [...this.currentUser.cards, card] : [{ ...card }];
           // @ts-ignore
           this.authService.update(this.currentUser.id, { cards }).subscribe();
         }

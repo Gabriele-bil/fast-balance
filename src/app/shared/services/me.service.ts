@@ -15,9 +15,10 @@ export class MeService {
 
   public getCards(): Observable<Card[]> {
     return this.authService.me.pipe(
-      switchMap(currentUser =>
-        this.firestore.collection<Card>('cards', ref => ref.where('userId', '==', currentUser.id)).snapshotChanges()),
-      map(items => items.map(item => ({ id: item.payload.doc.id, ...item.payload.doc.data() } as Card)))
-    )
+      switchMap(currentUser => {
+        return this.firestore.collection<Card>('cards', ref => ref.where('userId', '==', currentUser.id)).get().pipe(
+          map(items => items.docs.map(item => ({ id: item.id, ...item.data() } as Card)))
+        )
+      }));
   }
 }

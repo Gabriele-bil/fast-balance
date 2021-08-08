@@ -12,9 +12,7 @@ import { CardService } from "@shared/services/card.service";
       <div class="mb-3">
         <app-payment-edit [cards]="cards" (save)="savePayment($event)"></app-payment-edit>
       </div>
-      <ng-container>
-        <app-welcome-summary [cards]="cards"></app-welcome-summary>
-      </ng-container>
+      <app-welcome-summary [cards]="cards"></app-welcome-summary>
     </div>
   `,
   styles: [
