@@ -78,7 +78,7 @@ import { Card } from "@shared/models/card.model";
 
               <div class="card-body" *ngIf="!cards.length">
                 <h3>Devi aggiungere prima una carta</h3>
-                <a routerLink="/cms/cards/add">Vai alla sezione per aggiungere una carta</a>
+                <a routerLink="/dashboard/cms/cards/add">Vai alla sezione per aggiungere una carta</a>
               </div>
             </div>
           </ng-template>

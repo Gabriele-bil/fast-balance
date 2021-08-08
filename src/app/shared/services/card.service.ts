@@ -3,7 +3,7 @@ import { GenericService } from "@shared/services/generic.service";
 import { Card } from "@shared/models/card.model";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Payment } from "@shared/models/payment.model";
-import { exhaustMap, first } from "rxjs/operators";
+import { first, switchMap } from "rxjs/operators";
 import { Observable, of } from "rxjs";
 
 @Injectable({
@@ -18,7 +18,7 @@ export class CardService extends GenericService<Card> {
   public addPayment(cardId: string, payment: Payment): Observable<Card | undefined> {
     return this.getById(cardId).pipe(
       first(),
-      exhaustMap(card => {
+      switchMap(card => {
         if (card) {
           const payments = card.payments ? [...card.payments] : [];
           payments.push(payment);

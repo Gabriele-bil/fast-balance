@@ -3,9 +3,10 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router } from "@angular/router";
 import { UserService } from "./user.service";
-import { BehaviorSubject, from, Observable } from "rxjs";
-import { switchMap, tap } from "rxjs/operators";
+import { BehaviorSubject, from, Observable, of } from "rxjs";
+import { catchError, switchMap, tap } from "rxjs/operators";
 import { IUser, User } from "../models/user.model";
+import { SnackbarService } from "@shared/services/snackbar.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthService {
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private snackbarService: SnackbarService
   ) {
       this.currentUser$?.next(JSON.parse(<string>localStorage.getItem('user')));
       this.currentUser$!.subscribe(user => user ? localStorage.setItem('user', JSON.stringify(user)) : null);
@@ -32,7 +34,8 @@ export class AuthService {
     const user = User.Build({ username, email, createdDate } as IUser);
     return from(this.auth.createUserWithEmailAndPassword(email, password)).pipe(
       switchMap(() => this.userService.createUser(user)),
-      tap(this.updateCurrentUser)
+      tap(this.updateCurrentUser),
+      catchError(error => this.catchError(error))
     );
   }
 
@@ -41,14 +44,16 @@ export class AuthService {
       tap(user => {
         localStorage.setItem('user', JSON.stringify(user));
         this.currentUser$!.next(user as User);
-      })
+      }),
+      catchError(error => this.catchError(error))
     )
   }
 
   public login(email: string, password: string): Observable<User | undefined> {
     return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(
       switchMap(userRes => this.userService.getUserByEmail(userRes.user?.email)),
-      tap(this.updateCurrentUser)
+      tap(this.updateCurrentUser),
+      catchError(error => this.catchError(error))
     );
   }
 
@@ -62,7 +67,8 @@ export class AuthService {
         localStorage.removeItem('user');
         this.currentUser$?.next(undefined);
         this.router.navigateByUrl('');
-      })
+      }),
+      catchError(error => this.catchError(error))
     )
   }
 
@@ -70,4 +76,9 @@ export class AuthService {
       this.currentUser$!.next(user as User);
       this.router.navigateByUrl('/dashboard');
   };
+
+  private catchError(error: string): Observable<any> {
+    this.snackbarService.openSnackBar(error);
+    return of(null);
+  }
 }

@@ -5,6 +5,7 @@ import { Card } from "@shared/models/card.model";
 import { Subscription } from "rxjs";
 import { AuthService } from "@shared/services/auth.service";
 import { User } from "@shared/models/user.model";
+import { MeService } from "@shared/services/me.service";
 
 @Component({
   selector: 'app-cards',
@@ -22,10 +23,10 @@ import { User } from "@shared/models/user.model";
             <div class="col-2 d-none d-md-flex"></div>
           </div>
 
-          <div class="row card-container my-3 align-items-center cursor-pointer" *ngFor="let card of cards" >
+          <div class="row card-container my-3 align-items-center p-3" *ngFor="let card of cards" >
             <div class="col-1 d-none d-md-flex"><img [src]="card.iconUrl" alt="card icon" class="img-fluid"></div>
             <div class="col">{{ card.name }}</div>
-            <div class="col">{{ card.balance }}</div>
+            <div class="col"><app-money [quantity]="card.balance"></app-money></div>
             <div class="col">{{ card.payments?.length ? card.payments?.length : 0 }}</div>
             <div class="col">
               <button class="btn btn-primary" [routerLink]="['edit/', card.id]">Dettagli</button>
@@ -36,11 +37,9 @@ import { User } from "@shared/models/user.model";
           </div>
         </div>
 
-        <button class="btn btn-primary position-fixed my-2">
-          <a routerLink="add" class="text-white text-decoration-none">
-            Aggiungi nuova carta
-          </a>
-        </button>
+        <a routerLink="add" class="add-new-card text-white text-decoration-none btn btn-primary position-fixed my-2">
+          Aggiungi nuova carta
+        </a>
       </div>
     </div>
   `,
@@ -63,7 +62,7 @@ import { User } from "@shared/models/user.model";
           border-bottom: 1px solid #fafafa;
         }
 
-        button {
+        a.add-new-card {
           bottom: 3rem;
           right: 3rem;
 
@@ -88,14 +87,15 @@ export class CardsComponent implements OnInit, OnDestroy {
   constructor(
     private readonly cardService: CardService,
     private readonly spinnerService: SpinnerService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly meService: MeService
   ) {
     this.spinnerService.showSpinner$.next(true);
   }
 
   ngOnInit(): void {
     this.authService.me.subscribe(user => this.currentUser = user);
-    this.getCardsSubscription = this.cardService.getAll().subscribe(
+    this.getCardsSubscription = this.meService.getCards().subscribe(
       cards => {
         this.cards = cards ? cards.sort((a, b) => a.name > b.name ? 1 : -1) : [];
         this.spinnerService.showSpinner$.next(false);
