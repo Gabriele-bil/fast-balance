@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Card } from "@shared/models/card.model";
-import { Importance, Payment } from "@shared/models/payment.model";
-import { WalletImg } from "@shared/models/enums";
-import { Summary } from "@shared/models/summary.model";
-import moment from 'moment';
+import { IFormattedPayment } from "@shared/models/payment.model";
+import { ISummary } from "@shared/models/summary.model";
+import { CardService } from "@shared/services/card.service";
 
 @Component({
   selector: 'app-welcome-summary',
@@ -33,19 +32,21 @@ import moment from 'moment';
               <h4 class="mb-0">Ultimi movimenti</h4>
               <a routerLink="payment-list">Vai alla lista completa</a>
             </div>
-            <div class="payment d-flex justify-content-between align-items-center mb-3" *ngFor="let payment of payments"
+            <div class="payment d-flex justify-content-between align-items-center mb-3"
+                 *ngFor="let payment of calculatedPayments.formattedPayments"
                  [title]="payment.cardName">
               <div class="d-flex">
                 <img [src]="payment.cardIcon" alt="icon url">
                 <h5 class="m-0 px-3">{{ payment.payment.date | date }}</h5>
-                <h5  class="m-0">{{ payment.payment.note }}</h5>
+                <div class="col"
+                     [title]="payment.payment.note">{{ (payment.payment.note.length > 30) ? (payment.payment.note | slice:0:30) + '..' : (payment.payment.note) }}</div>
               </div>
               <app-money [quantity]="payment.payment.quantity"></app-money>
             </div>
           </div>
         </div>
 
-        <app-welcome-balances [currentDay]="currentDay" [summary]="summary"></app-welcome-balances>
+        <app-balances-summary [currentDay]="currentDay" [summary]="calculatedPayments.summary"></app-balances-summary>
       </div>
     </div>
   `,
@@ -73,46 +74,21 @@ import moment from 'moment';
 export class WelcomeSummaryComponent implements OnInit {
   @Input() cards: Card[] = [];
 
-  public payments: { payment: Payment, cardIcon: WalletImg, cardName: string }[] = [];
   public currentDay = new Date();
-  public summary: Summary = {
-    expenses: 0,
-    income: 0,
-    net: 0,
-    unnecessaryExpenses: 0
-  };
+  public calculatedPayments!: { formattedPayments: IFormattedPayment[], summary: ISummary };
+
+  constructor(private cardService: CardService) {
+  }
 
   ngOnInit(): void {
-    this.cards.forEach(card =>
-      card.payments?.forEach(payment => {
-        this.payments.push({
-          payment,
-          cardIcon: card.iconUrl,
-          cardName: card.name
-        })
-        this.setSummary(payment);
-        this.summary.net = this.summary.income - this.summary.expenses;
-      })
-    );
-    this.payments.sort((p1, p2) => new Date(p2.payment.date).getTime() - new Date(p1.payment.date).getTime()).slice(0, 4);
-    this.payments = this.payments.slice(0, 5);
+    this.calculatedPayments = this.cardService.getPayments(this.cards);
+    this.calculatedPayments.formattedPayments.sort((p1, p2) => new Date(p2.payment.date).getTime() - new Date(p1.payment.date).getTime())
+    this.calculatedPayments.formattedPayments = this.calculatedPayments.formattedPayments.slice(0, 5);
   }
 
   get totalBalance(): number {
     return this.cards
       ? this.cards?.map(card => card.balance).reduce((acc, curr) => acc + curr, 0)
       : 0
-  }
-
-  public setSummary(payment: Payment): void {
-    if (moment(payment.date).month() === moment().month()) {
-      payment.quantity < 0
-        ? this.summary.expenses -= payment.quantity
-        : this.summary.income += payment.quantity;
-
-      if (payment.quantity < 0 && payment.importance === Importance.LOW) {
-        this.summary.unnecessaryExpenses -= payment.quantity
-      }
-    }
   }
 }

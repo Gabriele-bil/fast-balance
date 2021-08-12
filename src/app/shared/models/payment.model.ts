@@ -1,3 +1,5 @@
+import { WalletImg } from "@shared/models/enums";
+
 export enum Importance {
   LOW = 'low',
   MEDIUM = 'medium',
@@ -14,6 +16,12 @@ export interface IPayment {
   importance: Importance;
   isRecurrence: boolean;
   recurrenceInDays: number
+}
+
+export interface IFormattedPayment {
+  payment: Payment,
+  cardIcon: WalletImg,
+  cardName: string,
 }
 
 export class Payment implements IPayment {

@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Summary } from "@shared/models/summary.model";
+import { ISummary } from "@shared/models/summary.model";
 
 @Component({
-  selector: 'app-welcome-balances',
+  selector: 'app-balances-summary',
   template: `
-    <div id="container">
-      <h3 class="mt-3">Bilancio mese {{ currentDay | date: 'MMMM' | titlecase }}</h3>
+    <div id="container" class="w-100">
+      <h3 class="mt-3 fw-bold">Bilancio mese {{ currentDay | date: 'MMMM' | titlecase }}</h3>
       <div class="row">
         <div class="col">
           <h4>Spese</h4>
@@ -38,16 +38,16 @@ import { Summary } from "@shared/models/summary.model";
     </div>
   `,
   styles: [
-    // language=scss
+    //language=scss
     `
-      #container {
-        border-top: 1px solid #111112;
+      h3 {
+        font-size: 1.5rem
       }
     `]
 })
-export class WelcomeBalancesComponent {
+export class BalancesSummaryComponent {
   @Input() currentDay: Date = new Date();
-  @Input() summary: Summary = {
+  @Input() summary: ISummary = {
     expenses: 0,
     income: 0,
     net: 0,
