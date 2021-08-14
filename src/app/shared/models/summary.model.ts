@@ -1,4 +1,4 @@
-export interface Summary {
+export interface ISummary {
     expenses: number;
     income: number;
     net: number;

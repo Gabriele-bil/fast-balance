@@ -9,13 +9,15 @@ import { PaymentEditComponent } from "@shared/components/payment-edit.component"
 import { RouterModule } from "@angular/router";
 import { ConfirmButtonsComponent } from "@shared/components/confirm-buttons.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { BalancesSummaryComponent } from "@shared/components/balances-summary.component";
 
 const sharedComponents = [
   LoadingButtonComponent,
   MoneyComponent,
   ModalComponent,
   PaymentEditComponent,
-  ConfirmButtonsComponent
+  ConfirmButtonsComponent,
+  BalancesSummaryComponent
 ];
 const sharedModules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule, NgbModule];
 

@@ -72,7 +72,7 @@ import { Card } from "@shared/models/card.model";
                     </label>
                   </div>
 
-                  <app-confirm-buttons [disable]="paymentForm.invalid" (save)="savePayment()"></app-confirm-buttons>
+                  <app-confirm-buttons [disable]="paymentForm.invalid" (save)="savePayment()" (cancel)="clearForm()"></app-confirm-buttons>
                 </form>
               </div>
 
@@ -122,6 +122,10 @@ export class PaymentEditComponent implements OnInit {
     } as Payment;
 
     this.save.emit({ card: value.card, payment })
+  }
+
+  public clearForm(): void {
+    this.paymentForm.reset();
   }
 
   private initForm(): void {
