@@ -1,20 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-welcome-payment-filters-container',
   template: `
-    <p>
-      filters-container works!
-    </p>
+    <div class="card">
+      <div class="card-body">
+        <h1>In Arrivo</h1>
+      </div>
+    </div>
   `,
-  styles: [
-  ]
+  styles: []
 })
-export class FiltersContainerComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class FiltersContainerComponent {
 }
