@@ -301,20 +301,22 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
   }
 
   private setForm(user: User): void {
-    this.settingsUserForm = this.fb.group({
-      name: [{ value: user.name, disabled: !this.edit }],
-      surname: [{ value: user.surname, disabled: !this.edit }],
-      username: [{ value: user.username, disabled: !this.edit }],
-      publicProfile: [{ value: user.publicProfile, disabled: !this.edit }],
-      job: [{ value: user.job, disabled: !this.edit }],
-      gender: [{ value: user.gender, disabled: !this.edit }],
-      age: [{ value: user.age, disabled: !this.edit }],
-      phoneNumber: [{ value: user.phoneNumber, disabled: !this.edit }],
-      website: [{ value: user.website, disabled: !this.edit }],
-      city: [{ value: user.location.city, disabled: !this.edit }],
-      address: [{ value: user.location.address, disabled: !this.edit }],
-      cap: [{ value: user.location.cap, disabled: !this.edit }],
-      biography: [{ value: user.biography, disabled: !this.edit }],
-    });
+    if (user) {
+      this.settingsUserForm = this.fb.group({
+        name: [{ value: user.name, disabled: !this.edit }],
+        surname: [{ value: user.surname, disabled: !this.edit }],
+        username: [{ value: user.username, disabled: !this.edit }],
+        publicProfile: [{ value: user.publicProfile, disabled: !this.edit }],
+        job: [{ value: user.job, disabled: !this.edit }],
+        gender: [{ value: user.gender, disabled: !this.edit }],
+        age: [{ value: user.age, disabled: !this.edit }],
+        phoneNumber: [{ value: user.phoneNumber, disabled: !this.edit }],
+        website: [{ value: user.website, disabled: !this.edit }],
+        city: [{ value: user.location.city, disabled: !this.edit }],
+        address: [{ value: user.location.address, disabled: !this.edit }],
+        cap: [{ value: user.location.cap, disabled: !this.edit }],
+        biography: [{ value: user.biography, disabled: !this.edit }],
+      });
+    }
   }
 }
