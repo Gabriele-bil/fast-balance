@@ -7,31 +7,20 @@ import { ISummary } from "@shared/models/summary.model";
     <div id="container" class="w-100">
       <h3 class="mt-3 fw-bold">Bilancio mese {{ currentDay | date: 'MMMM' | titlecase }}</h3>
       <div class="row">
-        <div class="col">
+        <div class="col-6 col-md mb-4 mb-md-0">
           <h4>Spese</h4>
-        </div>
-        <div class="col">
-          <h4>Introiti</h4>
-        </div>
-        <div class="col">
-          <h4>Netto</h4>
-        </div>
-        <div class="col">
-          <h4>Spese non necessarie</h4>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
           <app-money [quantity]="-summary.expenses"></app-money>
         </div>
-        <div class="col">
+        <div class="col-6 col-md mb-4 mb-md-0">
+          <h4>Introiti</h4>
           <app-money [quantity]="summary.income"></app-money>
         </div>
-        <div class="col">
+        <div class="col-6 col-md">
+          <h4>Netto</h4>
           <app-money [quantity]="summary.net"></app-money>
         </div>
-        <div class="col">
+        <div class="col-6 col-md">
+          <h4>Spese non necessarie</h4>
           <app-money [quantity]="-summary.unnecessaryExpenses"></app-money>
         </div>
       </div>
