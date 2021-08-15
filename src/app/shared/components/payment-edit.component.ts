@@ -7,8 +7,8 @@ import { Card } from "@shared/models/card.model";
   selector: 'app-payment-edit',
   template: `
     <div>
-      <ngb-accordion>
-        <ngb-panel title="Aggiungi nuovo movimento">
+      <ngb-accordion [activeIds]="openAccordion ? 'payment'  : ''">
+        <ngb-panel id="payment" title="Aggiungi nuovo movimento">
           <ng-template ngbPanelContent>
             <div class="card">
               <div class="card-body" *ngIf="cards.length">
@@ -90,6 +90,7 @@ import { Card } from "@shared/models/card.model";
 })
 export class PaymentEditComponent implements OnInit {
   @Input() cards: Card[] = [];
+  @Input() openAccordion: boolean = false;
   @Output() save = new EventEmitter<{ card: string, payment: Payment }>();
 
   public paymentForm: FormGroup = new FormGroup({});
