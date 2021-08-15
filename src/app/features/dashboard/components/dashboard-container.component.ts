@@ -12,7 +12,9 @@ import { switchMap } from "rxjs/operators";
   template: `
     <div id="container" class="d-flex">
       <app-dashboard-sidebar (handleLogout)="logout()" (handleNewPayment)="openNewModal()"></app-dashboard-sidebar>
-      <router-outlet></router-outlet>
+      <div class="margin-sidebar">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   `,
   styles: [
@@ -22,6 +24,10 @@ import { switchMap } from "rxjs/operators";
         width: 100vw;
         min-height: 100vh;
         background-color: #111112;
+
+        .margin-sidebar {
+          margin-left: 80px;
+        }
       }
     `,
   ],

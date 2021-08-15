@@ -5,7 +5,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   template: `
     <div
       id="container"
-      class="d-none d-md-flex flex-column justify-content-between align-items-center py-3"
+      class="d-none d-md-flex flex-column justify-content-between align-items-center py-3 position-fixed"
     >
       <div class="d-flex flex-column align-items-center">
         <a routerLink="/dashboard/welcome" class="p-1 pt-3" routerLinkActive="active">
