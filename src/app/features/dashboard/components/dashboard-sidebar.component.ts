@@ -1,13 +1,11 @@
-import { Component, OnDestroy } from '@angular/core';
-import { AuthService } from "@shared/services/auth.service";
-import { Subscription } from "rxjs";
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-sidebar',
   template: `
     <div
       id="container"
-      class="d-none d-md-flex flex-column justify-content-between align-items-center py-3"
+      class="d-none d-md-flex flex-column justify-content-between align-items-center py-3 position-fixed"
     >
       <div class="d-flex flex-column align-items-center">
         <a routerLink="/dashboard/welcome" class="p-1 pt-3" routerLinkActive="active">
@@ -26,11 +24,17 @@ import { Subscription } from "rxjs";
       </div>
 
       <div class="profile-container d-flex flex-column">
-        <a routerLink="/dashboard/settings" class="p-1 pt-3" routerLinkActive="active">
+        <div class="d-flex align-items-center justify-content-center cursor-pointer">
+          <img src="/assets/images/icons/plus.png" alt="Add new payment" (click)="handleNewPayment.emit()"/>
+        </div>
+
+        <a routerLink="/dashboard/settings" class="p-1 pt-3 d-flex align-items-center justify-content-center"
+           routerLinkActive="active">
           <img src="/assets/images/user-icon.png" alt="User image icon"
           /></a>
 
-        <button class="btn" (click)="logout()">
+
+        <button class="btn" (click)="handleLogout.emit()">
           <img src="/assets/images/icons/logout.png" alt="logout" class="mt-3"/>
         </button>
       </div>
@@ -56,12 +60,16 @@ import { Subscription } from "rxjs";
           </a>
         </div>
 
+        <div class="d-flex align-items-center">
+          <img src="/assets/images/icons/plus.png" alt="Add new payment" (click)="handleNewPayment.emit()"/>
+        </div>
+
         <div class="profile-container d-flex align-items-center">
           <a routerLink="/dashboard/settings">
             <img src="/assets/images/user-icon.png" alt="User image icon"
             /></a>
 
-          <button class="btn" (click)="logout()">
+          <button class="btn" (click)="handleLogout.emit()">
             <img src="/assets/images/icons/logout.png" alt="logout"/>
           </button>
         </div>
@@ -101,18 +109,7 @@ import { Subscription } from "rxjs";
     `,
   ],
 })
-export class DashboardSidebarComponent implements OnDestroy {
-  private logoutSubscription$: Subscription | undefined;
-
-  constructor(private readonly authService: AuthService) {
-  }
-
-  ngOnDestroy(): void {
-    this.logoutSubscription$?.unsubscribe();
-  }
-
-  public logout(): void {
-    this.logoutSubscription$ = this.authService.signOut().subscribe();
-  }
-
+export class DashboardSidebarComponent {
+  @Output() handleLogout = new EventEmitter<void>();
+  @Output() handleNewPayment = new EventEmitter<void>();
 }

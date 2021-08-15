@@ -5,6 +5,7 @@ import { DashboardContainerComponent } from "./components/dashboard-container.co
 const welcomeModule = () => import('./welcome/welcome.module').then(w => w.WelcomeModule);
 const settingsModule = () => import('./settings/settings.module').then(s => s.SettingsModule);
 const cmsModule = () => import('./cms/cms.module').then(c => c.CmsModule);
+const transactionModule = () => import('./transaction/transaction.module').then(t => t.TransactionModule);
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'welcome', loadChildren: welcomeModule },
       { path: 'settings', loadChildren: settingsModule },
       { path: 'cms', loadChildren: cmsModule },
+      { path: 'transaction', loadChildren: transactionModule },
     ],
   },
 ]
