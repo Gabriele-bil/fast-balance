@@ -30,7 +30,7 @@ import { CardService } from "@shared/services/card.service";
           <div class="col-12 col-md-6">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="mb-0">Ultimi movimenti</h4>
-              <a routerLink="payment-list">Vai alla lista completa</a>
+              <a routerLink="/dashboard/transaction">Vai alla lista completa</a>
             </div>
             <div class="payment d-flex justify-content-between align-items-center mb-3"
                  *ngFor="let payment of calculatedPayments.formattedPayments"

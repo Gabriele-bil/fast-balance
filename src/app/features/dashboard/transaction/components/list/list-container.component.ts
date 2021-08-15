@@ -17,7 +17,7 @@ import moment from "moment";
             </h1>
 
             <ng-container *ngIf="paymentDates[findPaymentIndex(formattedPayment)].show">
-              <app-welcome-payment-single [item]="formattedPayment"></app-welcome-payment-single>
+              <app-single [item]="formattedPayment"></app-single>
             </ng-container>
 
             <div *ngIf="showSummary(i)" class="card summary p-3 mt-3 mb-5">

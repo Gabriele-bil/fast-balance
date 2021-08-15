@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-welcome-payment-container',
+  selector: 'app-transaction-container',
   template: `
     <div id="container" class="p-3 p-md-4">
       <div class="row">
@@ -27,7 +27,7 @@ import { Component, OnInit } from '@angular/core';
       }
     `]
 })
-export class WelcomePaymentContainerComponent implements OnInit {
+export class TransactionContainerComponent implements OnInit {
 
   constructor() { }
 

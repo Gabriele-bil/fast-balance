@@ -2,7 +2,7 @@ import { Component, HostListener, Input } from '@angular/core';
 import { IFormattedPayment, Importance } from "@shared/models/payment.model";
 
 @Component({
-  selector: 'app-welcome-payment-single',
+  selector: 'app-single',
   template: `
     <div class="row align-items-center text-md-center pb-2" [title]="item.cardName">
       <div class="col-6 col-md-1 mb-3 mb-md-0"><img [src]="item.cardIcon" alt="icon url"></div>
@@ -31,7 +31,7 @@ import { IFormattedPayment, Importance } from "@shared/models/payment.model";
     `
   ]
 })
-export class WelcomePaymentSingleComponent {
+export class SingleComponent {
   @Input() item!: IFormattedPayment;
 
   public innerWidth = window.innerWidth;

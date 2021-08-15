@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { WelcomePaymentRoutingModule } from './welcome-payment-routing.module';
-import { WelcomePaymentContainerComponent } from './components/welcome-payment-container.component';
+import { TransactionRoutingModule } from './transaction-routing.module';
+import { TransactionContainerComponent } from './components/transaction-container.component';
 import { ListContainerComponent } from './components/list/list-container.component';
 import { FiltersContainerComponent } from './components/filters/filters-container.component';
-import { WelcomePaymentSingleComponent } from './components/list/welcome-payment-single.component';
+import { SingleComponent } from './components/list/single.component';
 import { SharedModule } from "@shared/modules/shared.module";
 
 
 @NgModule({
   declarations: [
-    WelcomePaymentContainerComponent,
+    TransactionContainerComponent,
     ListContainerComponent,
     FiltersContainerComponent,
-    WelcomePaymentSingleComponent
+    SingleComponent
   ],
   imports: [
     CommonModule,
-    WelcomePaymentRoutingModule,
+    TransactionRoutingModule,
     SharedModule
   ]
 })
-export class WelcomePaymentModule { }
+export class TransactionModule { }
