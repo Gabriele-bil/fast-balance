@@ -12,14 +12,14 @@ export abstract class GenericService<T> {
   }
 
   getAll(): Observable<T[] | undefined> {
-    return this.getFirestoreCollection().snapshotChanges().pipe(
-      map(items => items.map(item => ({ id: item.payload.doc.id, ...item.payload.doc.data() } as unknown as T)))
+    return this.getFirestoreCollection().get().pipe(
+      map((items) => items.docs.map(item => ({ id: item.id, ...item.data() } as unknown as T)))
     );
   }
 
   getById(id: string): Observable<T | undefined> {
-    return from(this.getFirestoreCollection().doc<T>(id).snapshotChanges()).pipe(
-      map(item => ({ id: item.payload.id, ...item.payload.data() } as unknown as T))
+    return from(this.getFirestoreCollection().doc<T>(id).get()).pipe(
+      map(item => ({ id: item.id, ...item.data() } as unknown as T))
     )
   }
 
