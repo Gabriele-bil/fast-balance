@@ -17,14 +17,14 @@ export class UserService extends GenericService<User> {
   createUser(user: User): Observable<User> {
     const { id, ...dbUser } = user;
     return from(this.getCollection().add({ ...dbUser })).pipe(
-      switchMap(docRef => this.getCollection().doc<IUser>(docRef.id).snapshotChanges()),
-      map(item => ({ id: item.payload.id, ...item.payload.data() } as unknown as User))
+      switchMap(docRef => this.getCollection().doc<IUser>(docRef.id).get()),
+      map(item => ({ id: item.id, ...item.data() } as unknown as User))
     );
   }
 
   getUserByEmail(email: string | null | undefined): Observable<User> {
-    return this.firestore.collection<User>(this.getCollectionName(), ref => ref.where('email', '==', email).limit(1)).snapshotChanges().pipe(
-      map(users => ({ id: users[0].payload.doc.id, ...users[0].payload.doc.data() } as unknown as User))
+    return this.firestore.collection<User>(this.getCollectionName(), ref => ref.where('email', '==', email).limit(1)).get().pipe(
+      map(users => ({ id: users.docs[0].id, ...users.docs[0].data() } as unknown as User))
     )
   }
 
