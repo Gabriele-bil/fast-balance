@@ -44,8 +44,7 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly modalService: ModalService,
     private readonly cardService: CardService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(this.authService.me.subscribe(currentUser => this.currentUser = currentUser));

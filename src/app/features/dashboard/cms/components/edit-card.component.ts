@@ -132,8 +132,7 @@ export class EditCardComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly modalService: ModalService,
     private readonly router: Router
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.cardId = this.activatedRoute.snapshot.params.id ? this.activatedRoute.snapshot.params.id : '';
@@ -209,7 +208,6 @@ export class EditCardComponent implements OnInit {
   }
 
   private updateCard(body: Card): void {
-    console.log(body);
     this.spinnerService.showSpinner$.next(true);
     this.cardService.update(this.cardId, body).subscribe(
       card => {
