@@ -85,7 +85,7 @@ export class ListContainerComponent {
     };
 
     let monthFormattedPayments: IFormattedPayment[] = [...this.calculatedCard.formattedPayments];
-    monthFormattedPayments = monthFormattedPayments.splice(this.initialMonthIndex, index);
+    monthFormattedPayments = monthFormattedPayments.splice(this.initialMonthIndex, index + 1);
 
     monthFormattedPayments.forEach(item => {
       item.payment.quantity > 0
@@ -114,8 +114,6 @@ export class ListContainerComponent {
   public findPaymentIndex(formattedPayment: IFormattedPayment): number {
     return this.paymentDates.findIndex(value => this.checkDates(value, formattedPayment));
   }
-
-
 
   private checkDates(value: { month: number, year: number, show: boolean }, formattedPayment: IFormattedPayment): boolean {
     return (
