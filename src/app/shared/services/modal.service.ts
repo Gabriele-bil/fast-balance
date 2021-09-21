@@ -16,12 +16,19 @@ import { PaymentEditComponent } from "@shared/components/payment-edit.component"
 export class ModalService {
   constructor(private readonly modalService: NgbModal, private readonly router: Router,) {}
 
-  public cancelFormtext: ModalData = {
+  private cancelFormText: ModalData = {
     title: 'Perderai tutte le modifiche effettuate',
     description: 'Sei sicuro di voler uscire?',
     cancelButton: 'No',
-    confirmButton: 'Si',
+    confirmButton: 'Si'
   };
+
+  private deleteItemText: ModalData = {
+    title: 'Sei sicuro di voler cancellare questo elemento?',
+    description: "L'operazione è irreversibile",
+    cancelButton: 'No',
+    confirmButton: 'Si'
+  }
 
   public openModal(data: ModalData): NgbModalRef {
     const modalRef = this.modalService.open(ModalComponent, { centered: true });
@@ -51,7 +58,7 @@ export class ModalService {
 
   public cancelForm(formDirty: boolean, redirectUrl: string): void {
     if (formDirty) {
-      const modalRef = this.openModal(this.cancelFormtext);
+      const modalRef = this.openModal(this.cancelFormText);
       modalRef.componentInstance.confirm.subscribe((result: boolean) => {
         if (result) {
           modalRef.close();
@@ -61,5 +68,9 @@ export class ModalService {
     } else {
       this.router.navigateByUrl(redirectUrl);
     }
+  }
+
+  public deleteItem(): NgbModalRef {
+    return this.openModal(this.deleteItemText);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IFormattedPayment, Importance } from "@shared/models/payment.model";
 import { ISummary } from "@shared/models/summary.model";
 import moment from "moment";
@@ -16,12 +16,16 @@ import moment from "moment";
             </h1>
 
             <ng-container *ngIf="paymentDates[findPaymentIndex(formattedPayment)].show">
-              <app-single [item]="formattedPayment"></app-single>
+              <app-single [item]="formattedPayment"
+                          (editTransaction)="editTransaction.emit($event)"
+                          (deleteTransaction)="deleteTransaction.emit($event)">
+              </app-single>
             </ng-container>
 
             <div *ngIf="showSummary(i)" class="card summary p-3 mt-3 mb-5">
               <app-balances-summary [summary]="calculateSummary(i)"
-                                    [currentDay]="getCurrentMonth(i)  "></app-balances-summary>
+                                    [currentDay]="getCurrentMonth(i)">
+              </app-balances-summary>
             </div>
 
             <h1 *ngIf="showSummary(i)" class="mb-2 text-center cursor-pointer"
@@ -55,6 +59,9 @@ export class ListContainerComponent {
     }
   };
   @Input() paymentDates: { month: number, year: number, show: boolean }[] = [];
+
+  @Output() editTransaction = new EventEmitter<IFormattedPayment>();
+  @Output() deleteTransaction = new EventEmitter<IFormattedPayment>();
 
   private initialMonthIndex: number = 0;
 
@@ -107,6 +114,8 @@ export class ListContainerComponent {
   public findPaymentIndex(formattedPayment: IFormattedPayment): number {
     return this.paymentDates.findIndex(value => this.checkDates(value, formattedPayment));
   }
+
+
 
   private checkDates(value: { month: number, year: number, show: boolean }, formattedPayment: IFormattedPayment): boolean {
     return (

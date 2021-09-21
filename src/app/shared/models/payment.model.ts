@@ -19,6 +19,7 @@ export interface IPayment {
 }
 
 export interface IFormattedPayment {
+  cardId: string;
   payment: Payment,
   cardIcon: WalletImg,
   cardName: string,

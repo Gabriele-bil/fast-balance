@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { IFormattedPayment, Importance } from "@shared/models/payment.model";
 
 @Component({
@@ -14,6 +14,12 @@ import { IFormattedPayment, Importance } from "@shared/models/payment.model";
       <div class="col-6 col-md-1 mb-3 mb-md-0 d-flex"><span class="d-flex d-md-none pe-2 text-info">Importanza:</span>{{ importance }}</div>
       <div class="col-6 col-md-2 mb-3 mb-md-0">
         <app-money [quantity]="item.payment.quantity"></app-money>
+      </div>
+      <div class="col-1 cursor-pointer" (click)="editTransaction.emit(item)">
+        <img src="assets/images/icons/edit.png" alt="Edit transaction">
+      </div>
+      <div class="col-1 cursor-pointer" (click)="deleteTransaction.emit(item)">
+        <img src="assets/images/icons/trash.png" alt="delete transaction">
       </div>
     </div>
   `,
@@ -33,6 +39,9 @@ import { IFormattedPayment, Importance } from "@shared/models/payment.model";
 })
 export class SingleComponent {
   @Input() item!: IFormattedPayment;
+
+  @Output() editTransaction = new EventEmitter<IFormattedPayment>();
+  @Output() deleteTransaction = new EventEmitter<IFormattedPayment>();
 
   public innerWidth = window.innerWidth;
 

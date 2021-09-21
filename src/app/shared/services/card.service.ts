@@ -22,6 +22,7 @@ export class CardService extends GenericService<Card> {
       first(),
       switchMap(card => {
         if (card) {
+          payment.id = this.genId();
           const payments = card.payments ? [...card.payments] : [];
           payments.push(payment);
           const balance = card.balance + payment.quantity;
@@ -41,22 +42,40 @@ export class CardService extends GenericService<Card> {
       unnecessaryExpenses: 0
     };
 
-    cards.forEach(card =>
-      card.payments?.forEach(payment => {
-        formattedPayments.push({
-          payment,
-          cardIcon: card.iconUrl,
-          cardName: card.name,
+    cards.forEach(card => {
+        card.payments?.forEach(payment => {
+          formattedPayments.push({
+            payment,
+            cardIcon: card.iconUrl,
+            cardName: card.name,
+            cardId: card.id ? card.id : ''
+          })
+          summary = this.setSummary(payment, summary);
+          summary.net = summary.income - summary.expenses;
         })
-        summary = this.setSummary(payment, summary);
-        summary.net = summary.income - summary.expenses;
-      })
-    );
+    });
     return { formattedPayments, summary };
   }
 
   protected getCollectionName(): string {
     return "cards";
+  }
+
+  public deletePayment(cardId: string, removedPayment: Payment): Observable<Card | undefined> {
+    return this.getById(cardId).pipe(
+      first(),
+      switchMap(card => {
+        if (card) {
+          console.log(removedPayment);
+          console.log(card.payments);
+          const payments = card.payments?.filter(payment => payment.id !== removedPayment.id);
+          console.log(payments);
+          const balance = card.balance - removedPayment.quantity;
+          return this.update(cardId, { balance, payments } as Card);
+        }
+        return of(undefined);
+      })
+    )
   }
 
   private setSummary(payment: Payment, summary: ISummary): ISummary {
@@ -71,5 +90,9 @@ export class CardService extends GenericService<Card> {
     }
 
     return summary;
+  }
+
+  private genId(): string {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 }
