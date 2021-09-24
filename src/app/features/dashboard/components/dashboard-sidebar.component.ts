@@ -21,6 +21,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
             alt="Le tue carte"
           />
         </a>
+
+        <a routerLink="/dashboard/tools" class="p-1 pt-3" routerLinkActive="active">
+          <img  src="/assets/images/icons/tools.svg" alt="tools">
+        </a>
       </div>
 
       <div class="profile-container d-flex flex-column">
@@ -30,9 +34,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
         <a routerLink="/dashboard/settings" class="p-1 pt-3 d-flex align-items-center justify-content-center"
            routerLinkActive="active">
-          <img src="/assets/images/user-icon.png" alt="User image icon"
-          /></a>
-
+          <img src="/assets/images/user-icon.png" alt="User image icon"/>
+        </a>
 
         <button class="btn" (click)="handleLogout.emit()">
           <img src="/assets/images/icons/logout.png" alt="logout" class="mt-3"/>
@@ -52,11 +55,15 @@ import { Component, EventEmitter, Output } from '@angular/core';
             </a>
           </div>
 
-          <a routerLink="/dashboard/cms/cards">
+          <a routerLink="/dashboard/cms/cards" class="mx-3">
             <img
               src="/assets/images/icons/black-wallet.png"
               alt="Le tue carte"
             />
+          </a>
+
+          <a routerLink="/dashboard/tools">
+            <img  src="/assets/images/icons/tools.svg" alt="tools">
           </a>
         </div>
 

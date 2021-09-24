@@ -84,7 +84,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
             </div>
 
             <div class="row my-0 my-md-5">
-              <div class="col-12 col-md-8 mb-3 mb-md-0">
+              <div class="col-12 col-md-5 mb-3 mb-md-0">
                 <input
                   type="text"
                   class="form-control"
@@ -93,6 +93,15 @@ import { SnackbarService } from '@shared/services/snackbar.service';
                 />
               </div>
               <div class="col-12 col-md-4 mb-3 mb-md-0">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Stipendio"
+                  formControlName="salary"
+                />
+              </div>
+
+              <div class="col-12 col-md-3 mb-3 mb-md-0">
                 <select class="form-control" formControlName="gender">
                   <option value="" disabled selected>Genere</option>
                   <option value="male">Uomo</option>
@@ -248,12 +257,14 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
 
   public saveUser(): void {
     const formValue = this.settingsUserForm.value;
+    console.log(formValue);
     const body = {
       name: formValue.name,
       surname: formValue.surname,
       username: formValue.username,
       publicProfile: formValue.publicProfile,
       job: formValue.job,
+      salary: formValue.salary,
       gender: formValue.gender,
       age: formValue.age,
       phoneNumber: formValue.phoneNumber,
@@ -308,6 +319,7 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
         username: [{ value: user.username, disabled: !this.edit }],
         publicProfile: [{ value: user.publicProfile, disabled: !this.edit }],
         job: [{ value: user.job, disabled: !this.edit }],
+        salary: [{ value: user.salary, disabled: !this.edit }],
         gender: [{ value: user.gender, disabled: !this.edit }],
         age: [{ value: user.age, disabled: !this.edit }],
         phoneNumber: [{ value: user.phoneNumber, disabled: !this.edit }],
