@@ -49,10 +49,11 @@ export class ModalService {
     return modalRef;
   }
 
-  public openNewPayment(cards: Card[], payment = Payment.Build({} as Payment)): NgbModalRef {
+  public openNewPayment(cards: Card[], loading: boolean, payment = Payment.Build({} as Payment)): NgbModalRef {
     const modalRef = this.modalService.open(PaymentEditComponent, { centered: true, size: "xl" });
     modalRef.componentInstance.cards = cards;
     modalRef.componentInstance.payment = payment;
+    modalRef.componentInstance.loading = loading;
     modalRef.componentInstance.openAccordion = true;
 
     return modalRef;

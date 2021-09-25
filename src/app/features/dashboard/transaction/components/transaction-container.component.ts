@@ -62,12 +62,14 @@ export class TransactionContainerComponent implements OnInit {
   }
 
   public editPayment(item: IFormattedPayment): void {
-    const modalRef = this.modalService.openNewPayment(this.cards, item.payment)
+    let loading = false;
+    const modalRef = this.modalService.openNewPayment(this.cards, loading, item.payment)
     modalRef.componentInstance.save.pipe(
       switchMap((result: { card: string, payment: Payment }) =>
         this.cardService.editPayment(result.card, result.payment, false)
       )
     ).subscribe(() => {
+      loading = false;
       modalRef.close();
       this.getCards()
     });

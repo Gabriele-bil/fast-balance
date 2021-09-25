@@ -95,8 +95,6 @@ export class CardService extends GenericService<Card> {
   }
 
   private changePayment(card: Card, editedPayment: Payment): Card {
-    console.log('Card', card);
-    console.log('edited', editedPayment);
     let foundedPaymentIndex = card.payments.findIndex(p => p.id === editedPayment.id);
     const payments = card.payments;
     const balance = card.balance - (editedPayment.quantity - card.payments[foundedPaymentIndex].quantity);

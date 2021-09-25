@@ -72,7 +72,7 @@ import { Card } from "@shared/models/card.model";
                     </label>
                   </div>
 
-                  <app-confirm-buttons [disable]="paymentForm.invalid" (save)="savePayment()" (cancel)="clearForm()"></app-confirm-buttons>
+                  <app-confirm-buttons [disable]="paymentForm.invalid || loading" (save)="savePayment()" (cancel)="clearForm()"></app-confirm-buttons>
                 </form>
               </div>
 
@@ -92,6 +92,7 @@ export class PaymentEditComponent implements OnInit {
   @Input() cards: Card[] = [];
   @Input() openAccordion: boolean = false;
   @Input() payment: Payment = Payment.Build({} as Payment);
+  @Input() loading = false;
   @Output() save = new EventEmitter<{ card: string, payment: Payment }>();
 
   public paymentForm: FormGroup = new FormGroup({});
@@ -111,6 +112,7 @@ export class PaymentEditComponent implements OnInit {
   }
 
   public savePayment(): void {
+    this.loading = true;
     const value = this.paymentForm.value;
     const payment = {
       id: this.payment.id,
