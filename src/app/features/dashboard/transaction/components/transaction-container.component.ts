@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { IFormattedPayment } from "@shared/models/payment.model";
+import { IFormattedPayment, Payment } from '@shared/models/payment.model';
 import { ISummary } from "@shared/models/summary.model";
 import { MeService } from "@shared/services/me.service";
 import { CardService } from "@shared/services/card.service";
 import moment from "moment";
 import { ModalService } from "@shared/services/modal.service";
+import { Card } from '@shared/models/card.model';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transaction-container',
@@ -47,6 +49,7 @@ export class TransactionContainerComponent implements OnInit {
     }
   };
   public paymentDates: { month: number, year: number, show: boolean }[] = [];
+  public cards: Card[] = [];
 
   constructor(
     private meService: MeService,
@@ -58,14 +61,24 @@ export class TransactionContainerComponent implements OnInit {
     this.getCards();
   }
 
-  public editPayment(item: IFormattedPayment): void { }
+  public editPayment(item: IFormattedPayment): void {
+    const modalRef = this.modalService.openNewPayment(this.cards, item.payment)
+    modalRef.componentInstance.save.pipe(
+      switchMap((result: { card: string, payment: Payment }) =>
+        this.cardService.editPayment(result.card, result.payment, false)
+      )
+    ).subscribe(() => {
+      modalRef.close();
+      this.getCards()
+    });
+  }
 
   public deletePayment(item: IFormattedPayment): void {
     const modalRef = this.modalService.deleteItem();
     modalRef.componentInstance.confirm.subscribe(
       (response: boolean) => {
         if (response) {
-          this.cardService.deletePayment(item.cardId, item.payment).subscribe(() => {
+          this.cardService.editPayment(item.cardId, item.payment, true).subscribe(() => {
             modalRef.close();
             this.getCards();
           })
@@ -78,6 +91,7 @@ export class TransactionContainerComponent implements OnInit {
 
   private getCards(): void {
     this.meService.getCards().subscribe(cards => {
+      this.cards = cards;
       this.calculatedCard = this.cardService.getPayments(cards);
       this.calculatedCard.formattedPayments.forEach(formattedPayment => {
         if (!this.checkIfDateExist(formattedPayment)) {

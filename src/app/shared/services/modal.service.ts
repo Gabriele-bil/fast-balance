@@ -9,6 +9,7 @@ import { ModalData } from '@shared/models/modal.model';
 import { Router } from "@angular/router";
 import { Card } from "@shared/models/card.model";
 import { PaymentEditComponent } from "@shared/components/payment-edit.component";
+import { Payment } from '../models/payment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -48,9 +49,10 @@ export class ModalService {
     return modalRef;
   }
 
-  public openNewPayment(cards: Card[]): NgbModalRef {
+  public openNewPayment(cards: Card[], payment = Payment.Build({} as Payment)): NgbModalRef {
     const modalRef = this.modalService.open(PaymentEditComponent, { centered: true, size: "xl" });
     modalRef.componentInstance.cards = cards;
+    modalRef.componentInstance.payment = payment;
     modalRef.componentInstance.openAccordion = true;
 
     return modalRef;
