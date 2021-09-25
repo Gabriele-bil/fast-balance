@@ -106,7 +106,6 @@ export class EditCardMediaComponent {
   @Output() handleSelectedColor = new EventEmitter<Color>()
   @Output() handleSelectedPicture = new EventEmitter<WalletImg>()
 
-  public ColorEnum = Color;
   public colors = Object.values(Color);
   public showColorSelection = false;
 

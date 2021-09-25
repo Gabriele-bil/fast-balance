@@ -72,7 +72,7 @@ import { Card } from "@shared/models/card.model";
                     </label>
                   </div>
 
-                  <app-confirm-buttons [disable]="paymentForm.invalid" (save)="savePayment()" (cancel)="clearForm()"></app-confirm-buttons>
+                  <app-confirm-buttons [disable]="paymentForm.invalid || loading" (save)="savePayment()" (cancel)="clearForm()"></app-confirm-buttons>
                 </form>
               </div>
 
@@ -91,6 +91,8 @@ import { Card } from "@shared/models/card.model";
 export class PaymentEditComponent implements OnInit {
   @Input() cards: Card[] = [];
   @Input() openAccordion: boolean = false;
+  @Input() payment: Payment = Payment.Build({} as Payment);
+  @Input() loading = false;
   @Output() save = new EventEmitter<{ card: string, payment: Payment }>();
 
   public paymentForm: FormGroup = new FormGroup({});
@@ -110,13 +112,15 @@ export class PaymentEditComponent implements OnInit {
   }
 
   public savePayment(): void {
+    this.loading = true;
     const value = this.paymentForm.value;
     const payment = {
+      id: this.payment.id,
       quantity: value.quantity,
       currency: 'eur',
       date: value.date,
       note: value.note,
-      tags: value.tags?.split(','),
+      tags: value?.tags?.split(','),
       importance: value?.importance,
       isRecurrence: value?.isRecurrence,
       recurrenceInDays: value.recurrenceInDays ? value.recurrenceInDays : 0
@@ -131,14 +135,19 @@ export class PaymentEditComponent implements OnInit {
 
   private initForm(): void {
     this.paymentForm = this.fb.group({
-      quantity: ['', Validators.required],
-      date: ['', Validators.required],
+      quantity: [this.payment.quantity, Validators.required],
+      date: [this.payment.date, Validators.required],
       card: ['', Validators.required],
-      note: ['', Validators.required],
-      isRecurrence: [false],
-      recurrenceInDays: [''],
-      tags: [''],
-      importance: ['medium']
-    })
+      note: [this.payment.note, Validators.required],
+      isRecurrence: [this.payment.isRecurrence],
+      recurrenceInDays: [this.payment.recurrenceInDays],
+      tags: [this.payment.tags.join(', ')],
+      importance: [this.payment.importance]
+    });
+
+    if (this.payment.id) {
+      const card = this.cards.find(c => c.payments.find(p => p.id === this.payment.id));
+      this.paymentForm.patchValue({ 'card': card?.id });
+    }
   }
 }

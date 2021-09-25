@@ -6,6 +6,7 @@ const welcomeModule = () => import('./welcome/welcome.module').then(w => w.Welco
 const settingsModule = () => import('./settings/settings.module').then(s => s.SettingsModule);
 const cmsModule = () => import('./cms/cms.module').then(c => c.CmsModule);
 const transactionModule = () => import('./transaction/transaction.module').then(t => t.TransactionModule);
+const toolsModule = () => import('./tools/tools.module').then(t => t.ToolsModule);
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'settings', loadChildren: settingsModule },
       { path: 'cms', loadChildren: cmsModule },
       { path: 'transaction', loadChildren: transactionModule },
+      { path: 'tools', loadChildren: toolsModule },
     ],
   },
 ]

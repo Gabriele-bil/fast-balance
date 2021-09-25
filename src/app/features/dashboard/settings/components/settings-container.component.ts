@@ -31,142 +31,12 @@ import { SnackbarService } from '@shared/services/snackbar.service';
             ></app-settings-summary>
           </div>
 
-          <form class="col-12 col-lg-9" [formGroup]="settingsUserForm">
-            <div class="row">
-              <div class="col-12 col-sm-6 mb-3 mb-sm-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Nome"
-                  formControlName="name"
-                />
-              </div>
-              <div class="col-12 col-sm-6 mb-3 mb-md-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Cognome"
-                  formControlName="surname"
-                />
-              </div>
-            </div>
-
-            <div class="row my-0 my-md-5">
-              <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Username"
-                  formControlName="username"
-                />
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-md-0">
-                <button
-                  class="btn btn-secondary h-100"
-                  (click)="resetPassword()"
-                >
-                  Reimposta password
-                </button>
-              </div>
-
-              <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-md-0 d-flex align-items-center">
-                <div class="form-group form-check">
-                  <label class="form-check-label">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      formControlName="publicProfile"
-                    />
-                    <span class="">Profilo visibile</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div class="row my-0 my-md-5">
-              <div class="col-12 col-md-8 mb-3 mb-md-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Lavoro"
-                  formControlName="job"
-                />
-              </div>
-              <div class="col-12 col-md-4 mb-3 mb-md-0">
-                <select class="form-control" formControlName="gender">
-                  <option value="" disabled selected>Genere</option>
-                  <option value="male">Uomo</option>
-                  <option value="female">Donna</option>
-                  <option value="other">Altro</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row my-0 my-md-5">
-              <div class="col-4">
-                <input
-                  type="number"
-                  class="form-control"
-                  placeholder="Età"
-                  formControlName="age"
-                />
-              </div>
-              <div class="col-8 col-md-4 mb-3 mb-md-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Telefono"
-                  formControlName="phoneNumber"
-                />
-              </div>
-
-              <div class="col-12 col-md-4 mb-3 mb-md-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Sito Web"
-                  formControlName="website"
-                />
-              </div>
-            </div>
-
-            <div class="row my-0 my-md-5">
-              <div class="col-12 col-md-4 mb-3 mb-md-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Città"
-                  formControlName="city"
-                />
-              </div>
-              <div class="col-12 col-sm-8 col-md-6 mb-3 mb-sm-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Via"
-                  formControlName="address"
-                />
-              </div>
-              <div class="col-12 col-sm-4 col-md-2 mb-3 mb-md-0">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="CAP"
-                  formControlName="cap"
-                />
-              </div>
-            </div>
-
-            <div class="row my-0 my-md-5">
-              <div class="col">
-                <textarea
-                  class="form-control"
-                  placeholder="Biografia"
-                  formControlName="biography"
-                ></textarea>
-              </div>
-            </div>
-          </form>
+          <div class="col-12 col-lg-9">
+           <app-settings-form
+             [settingsUserForm]="settingsUserForm"
+             [location]="location" (resetPassword)="resetPassword()">
+           </app-settings-form>
+          </div>
         </div>
 
         <app-confirm-buttons (cancel)="cancelForm()" (save)="saveUser()" [disable]="settingsUserForm.invalid"></app-confirm-buttons>
@@ -184,21 +54,7 @@ import { SnackbarService } from '@shared/services/snackbar.service';
           width: 100vw;
           margin-bottom: 50px;
         }
-
-        textarea {
-          min-height: 80px;
-        }
-
-        .form-check-label {
-          font-size: 1rem;
-
-          span {
-            display: inline-block;
-            margin-top: 3px;
-          }
-        }
       }
-
     `,
   ],
 })
@@ -231,6 +87,10 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  public get location(): FormGroup {
+    return this.settingsUserForm.get('location') as FormGroup;
+  }
+
   public toggleForm(): void {
     this.edit = !this.edit;
     this.edit
@@ -247,27 +107,9 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
   }
 
   public saveUser(): void {
-    const formValue = this.settingsUserForm.value;
-    const body = {
-      name: formValue.name,
-      surname: formValue.surname,
-      username: formValue.username,
-      publicProfile: formValue.publicProfile,
-      job: formValue.job,
-      gender: formValue.gender,
-      age: formValue.age,
-      phoneNumber: formValue.phoneNumber,
-      website: formValue.website,
-      location: {
-        city: formValue.city,
-        address: formValue.address,
-        cap: formValue.cap,
-      },
-      biography: formValue.biography,
-    } as User;
     this.spinnerService.showSpinner$.next(true);
     this.subscriptions.push(
-      this.authService.update(this.currentUser.id as string, body).subscribe(
+      this.authService.update(this.currentUser.id as string, this.settingsUserForm.value).subscribe(
         () =>
           setTimeout(() => this.spinnerService.showSpinner$.next(false), 300),
         () =>
@@ -308,13 +150,16 @@ export class SettingsContainerComponent implements OnInit, OnDestroy {
         username: [{ value: user.username, disabled: !this.edit }],
         publicProfile: [{ value: user.publicProfile, disabled: !this.edit }],
         job: [{ value: user.job, disabled: !this.edit }],
+        salary: [{ value: user.salary, disabled: !this.edit }],
         gender: [{ value: user.gender, disabled: !this.edit }],
         age: [{ value: user.age, disabled: !this.edit }],
         phoneNumber: [{ value: user.phoneNumber, disabled: !this.edit }],
         website: [{ value: user.website, disabled: !this.edit }],
-        city: [{ value: user.location.city, disabled: !this.edit }],
-        address: [{ value: user.location.address, disabled: !this.edit }],
-        cap: [{ value: user.location.cap, disabled: !this.edit }],
+        location: this.fb.group({
+          city: [{ value: user.location.city, disabled: !this.edit }],
+          address: [{ value: user.location.address, disabled: !this.edit }],
+          cap: [{ value: user.location.cap, disabled: !this.edit }],
+        }),
         biography: [{ value: user.biography, disabled: !this.edit }],
       });
     }

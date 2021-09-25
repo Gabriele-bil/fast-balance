@@ -22,6 +22,7 @@ export class CardService extends GenericService<Card> {
       first(),
       switchMap(card => {
         if (card) {
+          payment.id = this.genId();
           const payments = card.payments ? [...card.payments] : [];
           payments.push(payment);
           const balance = card.balance + payment.quantity;
@@ -41,22 +42,37 @@ export class CardService extends GenericService<Card> {
       unnecessaryExpenses: 0
     };
 
-    cards.forEach(card =>
+    cards.forEach(card => {
       card.payments?.forEach(payment => {
         formattedPayments.push({
           payment,
           cardIcon: card.iconUrl,
           cardName: card.name,
-        })
+          cardId: card.id ? card.id : ''
+        });
         summary = this.setSummary(payment, summary);
         summary.net = summary.income - summary.expenses;
       })
-    );
+    });
     return { formattedPayments, summary };
   }
 
   protected getCollectionName(): string {
     return "cards";
+  }
+
+  public editPayment(cardId: string, editedPayment: Payment, remove: boolean): Observable<Card | undefined> {
+    return this.getById(cardId).pipe(
+      first(),
+      switchMap(card => {
+        if (card) {
+          return remove
+            ? this.update(cardId, this.removePayment(card, editedPayment))
+            : this.update(cardId, this.changePayment(card, editedPayment));
+        }
+        return of(undefined);
+      })
+    );
   }
 
   private setSummary(payment: Payment, summary: ISummary): ISummary {
@@ -71,5 +87,24 @@ export class CardService extends GenericService<Card> {
     }
 
     return summary;
+  }
+
+  private genId(): string {
+    return Math.random().toString(36).substring(2, 15)
+      + Math.random().toString(36).substring(2, 15);
+  }
+
+  private changePayment(card: Card, editedPayment: Payment): Card {
+    let foundedPaymentIndex = card.payments.findIndex(p => p.id === editedPayment.id);
+    const payments = card.payments;
+    const balance = card.balance - (editedPayment.quantity - card.payments[foundedPaymentIndex].quantity);
+    payments.splice(foundedPaymentIndex, 1, editedPayment);
+    return { balance, payments } as Card;
+  }
+
+  private removePayment(card: Card, editedPayment: Payment): Card {
+    const payments = card.payments?.filter(payment => payment.id !== editedPayment.id);
+    const balance = card.balance - editedPayment.quantity;
+    return { balance, payments } as Card
   }
 }

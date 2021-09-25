@@ -44,8 +44,7 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly modalService: ModalService,
     private readonly cardService: CardService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(this.authService.me.subscribe(currentUser => this.currentUser = currentUser));
@@ -60,7 +59,7 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
   }
 
   public openNewModal(): void {
-    const modalRef = this.modalService.openNewPayment(this.currentUser.cards);
+    const modalRef = this.modalService.openNewPayment(this.currentUser.cards, false);
     this.subscriptions.push(modalRef.componentInstance.save.pipe(
       switchMap((result: { card: string, payment: Payment }) =>
         this.cardService.addPayment(result.card, result.payment)

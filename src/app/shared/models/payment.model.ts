@@ -19,6 +19,7 @@ export interface IPayment {
 }
 
 export interface IFormattedPayment {
+  cardId: string;
   payment: Payment,
   cardIcon: WalletImg,
   cardName: string,
@@ -32,7 +33,7 @@ export class Payment implements IPayment {
     public date = '',
     public note = '',
     public tags: string[] = [],
-    public importance = Importance.LOW,
+    public importance = Importance.MEDIUM,
     public isRecurrence = false,
     public recurrenceInDays = 0
   ) {
